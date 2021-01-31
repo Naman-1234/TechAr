@@ -17,7 +17,11 @@ app.get("/",(req,res)=>{
 })
 
 app.get('/sign-in', (req, res) => {
-    res.render('sign-in', {auth:true});
+    res.render('sign-in', {});
+});
+
+app.get('/admin-panel', (req, res, next) => {
+    res.render('admin-login', {});
 });
   
 app.listen(port, () => {
