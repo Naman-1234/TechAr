@@ -16,6 +16,10 @@ app.get("/",(req,res)=>{
     res.render("frontpage",{})
 })
 
+app.get('/sign-in', (req, res) => {
+    res.render('sign-in', {auth:true});
+});
+  
 app.listen(port, () => {
     console.log('Server Started at ' + port);
 });
