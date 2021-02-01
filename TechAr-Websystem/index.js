@@ -4,6 +4,10 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const path = require('path')
 const app = express();
+const instructorModel = require('./models/InstructorDetails');
+const bcrypt = require('bcrypt');
+var mailer = require('nodemailer');
+
 
 app.use(bodyParser.json({ limit: '10mb', extended: true }));
 app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
@@ -36,6 +40,61 @@ app.get("/dashboard/generate",(req,res)=>{
 })
 app.get('/admin-panel', (req, res, next) => {
     res.render('admin-login', {});
+});
+
+app.post('/admin-panel', async (req, res, next) => {
+  const InstructorPassword = req.body.psw;
+  const rounds = 10;
+  var hashedPassword = '';
+  var ob1;
+  ob1 = await bcrypt.hash(InstructorPassword, rounds, (err, hash) => {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    hashedPassword = hash;
+    let InsDetails = new instructorModel({
+      first_name: req.body.fname,
+      last_name: req.body.lname,
+      email: req.body.usremail,
+      password: hashedPassword,
+    });
+    InsDetails.save()
+      .then((doc) => {
+       
+        var InformMail = `Dear Sir/Ma'am, <br> Thanks for using our service and helping us to provide materials in the most efficient way as possible to deliver your precious lecture content to student we TechAr service appointed you as a instuctor at service TechAr your credentials are as follows.<br>
+           id: ${req.body.usremail}<br>password: ${req.body.psw} <br><br><br> Thanks and Regards <br>TechAr`;
+        var transporter = mailer.createTransport({
+          host: 'smtp.gmail.com',
+          port: 587,
+          secure: false,
+          service: 'gmail',
+          auth: {
+            user: 'techar.service@gmail.com',
+            pass: 'TechAr@9907',
+          },
+        });
+
+        var mailOptions = {
+          from: 'techar.service@gmail.com',
+          to: req.body.usremail,
+          subject: 'Appointed as instructor at tecahAr',
+          html: InformMail,
+        };
+
+        transporter.sendMail(mailOptions, function (error, info) {
+          if (error) {
+            console.log(error);
+          } else {
+            console.log('Email sent: ' + info.response);
+          }
+        });
+      })
+      .catch((err) => {
+        console.log('error : ', err);
+      });
+  });
+  res.render('FrontPage', {});
 });
 
 app.post('/admin-login', (req, res, next) => {
