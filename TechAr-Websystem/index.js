@@ -12,6 +12,18 @@ app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname + '/../public')));
 app.use(express.static('public'));
 
+mongoose
+  .connect('mongodb+srv://creator:nnNN@@22@cluster0.bkrcv.mongodb.net/Images', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log('connected');
+  })
+  .catch((err) => {
+    console.log('not connected');
+  });
+
 app.get("/",(req,res)=>{
     res.render("frontpage",{})
 })
