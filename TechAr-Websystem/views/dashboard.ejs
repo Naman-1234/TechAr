@@ -1,0 +1,42 @@
+<%- include('./Partials/header.ejs') -%>
+
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-head  er">
+          <h2 class="text-center">Your query checklist</h2>
+        </div>
+        <div class="modal-body">
+          <% if(queries_length!=0){ %>
+            <div class="query__list">
+                <% for(var j=0;j<queries_length;j++) { %>
+                <div class="query__card">
+                  <div class="query__header">
+                    <h4 class="student__name"><%= queries[j].name %></h4>
+                    <p class="query__date"><%= queries[j].date %></p>
+                  </div>
+                  <div class="query__content">
+                    <p><%= queries[j].query_text %></p>
+                  </div>
+                    <div class="query__footer">
+                    <h4 class="student__mail"">Reply to: <%= queries[j].student_mail %></h4>
+                    <% var delete_query = "/dashboard/" + queries[j].query_id %>
+                    <p><a href="<%= delete_query %>" class="close__link">Mark as resolved</a> </p> 
+                  </div>
+                </div>
+                <% } %>
+            </div>
+            <% } else {%>
+              <h1 class="text-center">No query raised &#128516; </h1>
+              <% } %>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="d-flex justify-content-between container mt-5">
+<button type="button" class="btn btn-primary doubt-button btn-lg" data-toggle="modal" data-target="#myModal">See all raised queries</button>
+<a href="/dashboard/generate" class="btn btn-primary btn-lg mr-5">Proceed to create lecture</a>
+</div>
+
