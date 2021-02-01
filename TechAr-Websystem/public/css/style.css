@@ -1,3 +1,4 @@
+/*This css files will help to style frontpage.ejs*/
 /* styling front page */
 .frontpage {
   display: flex;
@@ -78,30 +79,6 @@
 }
 @media only screen and (max-width:570px)
 { 
-  /* .frontpage
-  {
-    height:80%;
-  }
-  .frontpage-left h3
-  {
-    font-size:13px;
-    text-align: justify;
-  }
-  .frontpage-left h1
-  {
-     display: block;
-     font-size:25px;
-     margin-top:30px;
-     margin-bottom: 30px;
-  }
-  .frontpage-right  img
-  {
-    width:80%;
-    height:80%;
-    display: block;
-    margin:auto;
-    margin-top:40px;
-  } */
   .frontpage
   {
    flex-direction: column;
@@ -138,16 +115,6 @@
     margin-bottom:50px;
   }
 }
-
-
-
-
-
-
-
-
-
-
 
 @media only screen and (max-width: 700px) {
     .main__head {

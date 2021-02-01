@@ -1,3 +1,12 @@
+/*This css files will help to style any file which need less amount of styling */
 .required {
     color: red;
 }
+
+.not_found {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 88vh;
+    width:100%;
+  }
