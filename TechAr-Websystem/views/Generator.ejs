@@ -1,0 +1,63 @@
+<%- include('./Partials/header.ejs') -%>
+<div class="container mt-5">
+    <h1 class="text-center">Add Lecture</h1>
+<form>
+    <label for="Insemail" class="mt-4">Enter instructor mail</label> <span class="required">*</span>
+    <input
+      type="email"
+      class="form-control"
+      placeholder="enter your email"
+      name="Insemail"
+      id="Insemail"
+      required
+    />
+    <label for="subject" class="mt-4">Subject name</label><span class="required">*</span>
+    <input
+      type="subject"
+      class="form-control"
+      name="subject_name"
+      id="subject"
+      placeholder="Enter subject name"
+      required
+    />
+    <label for="ltitle" class="mt-4">Enter lecture title</label><span class="required">*</span>
+    <input
+      type="text"
+      class="form-control"
+      placeholder="lecture title"
+      name="ltitle"
+      id="ltitle"
+      required
+    />
+    <label for="note" class="mt-4">Enter additonal note for students</label>
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Additonal note to refer before start learning"
+      name="note"
+      id="note"
+      required
+    />
+    <label for="video_url" class="mt-4"
+      >Provide link which may be useful for students(Add Links add (comma), in between)</label
+    ><span class="required">*</span>
+    <textarea
+      class="form-control"
+      placeholder="Useful links"
+      name="video_url"
+      rows="5"
+      cols="50"
+      id="video_url"
+    ></textarea>
+  
+    <div class="row">
+      <div class="col-sm-6 text-center mb-3">
+        <button
+          type="submit"
+          class="btn btn-primary mt-3 btn-lg"
+        >
+          Add Lecture
+        </button>
+      </div>
+    </div>
+</form>

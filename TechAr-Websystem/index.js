@@ -19,7 +19,9 @@ app.get("/",(req,res)=>{
 app.get('/sign-in', (req, res) => {
     res.render('sign-in', {});
 });
-
+app.get("/generate",(req,res)=>{
+    res.render('Generator',{});
+})
 app.get('/admin-panel', (req, res, next) => {
     res.render('admin-login', {});
 });
