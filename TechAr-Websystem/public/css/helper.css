@@ -1,3 +1,11 @@
 .required {
     color: red;
 }
+
+.not_found {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 88vh;
+    width:100%;
+  }
