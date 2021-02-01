@@ -31,13 +31,13 @@ app.get("/",(req,res)=>{
 app.get('/sign-in', (req, res) => {
     res.render('sign-in', {});
 });
-app.get("/generate",(req,res)=>{
+app.get("/dashboard/generate",(req,res)=>{
     res.render('Generator',{});
 })
 app.get('/admin-panel', (req, res, next) => {
     res.render('admin-login', {});
 });
-  
+
 app.listen(port, () => {
     console.log('Server Started at ' + port);
 });
