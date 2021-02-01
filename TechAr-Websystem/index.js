@@ -12,6 +12,18 @@ app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname + '/../public')));
 app.use(express.static('public'));
 
+mongoose
+  .connect('mongodb+srv://creator:nnNN@@22@cluster0.bkrcv.mongodb.net/Images', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log('connected');
+  })
+  .catch((err) => {
+    console.log('not connected');
+  });
+
 app.get("/",(req,res)=>{
     res.render("frontpage",{})
 })
@@ -19,7 +31,9 @@ app.get("/",(req,res)=>{
 app.get('/sign-in', (req, res) => {
     res.render('sign-in', {});
 });
-
+app.get("/dashboard/generate",(req,res)=>{
+    res.render('Generator',{});
+})
 app.get('/admin-panel', (req, res, next) => {
     res.render('admin-login', {});
 });
@@ -37,6 +51,17 @@ app.get('/dashboard', (req, res) => {
   
   ///////////////
   
+app.post('/admin-login', (req, res, next) => {
+    var adminEmail = req.body.email;
+    var adminPassword = req.body.psw;
+    if (adminEmail === 'nlok5923@gmail.com' && adminPassword === '123') {
+      res.render('admin-panel', {});
+    } else {
+    //   var userVerified = false;
+      res.render('admin-login', {});
+    }
+});
+
 app.listen(port, () => {
     console.log('Server Started at ' + port);
 });

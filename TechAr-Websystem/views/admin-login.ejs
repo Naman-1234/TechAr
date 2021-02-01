@@ -1,11 +1,11 @@
 <%- include('./Partials/header.ejs') -%>
 <div class="middle">
-<form class="form-signin">
+<form class="form-signin" method="post" action="/admin-login">
     <h1 class="font-weight-normal mb-3 text-center">Login</h1>
     <label for="inputEmail" class="sr-only">Email address</label>
-    <input type="email" id="inputEmail" class="form-control mt-2" placeholder="Email address" name="usremail" required autofocus>
+    <input type="email" id="inputEmail" class="form-control mt-2" placeholder="Email address" name="email" required autofocus>
     <label for="inputPassword" class="sr-only">Password</label>
-    <input type="password" id="inputPassword" class="form-control mt-2" placeholder="Password" name="usrpsw" required>
+    <input type="password" id="inputPassword" class="form-control mt-2" placeholder="Password" name="psw" required>
     <button class="btn btn-size btn-primary btn-block mt-2" type="submit">Sign in</button>
   </form>
 </div>
