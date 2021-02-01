@@ -1,5 +1,5 @@
 const express = require('express');
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const path = require('path')
@@ -97,6 +97,19 @@ app.post('/admin-panel', async (req, res, next) => {
   res.render('FrontPage', {});
 });
 
+app.get('/dashboard', (req, res) => {
+    res.render('dashboard',{
+        //TODO Remember We need to give it this data through a database, Currently managing these properties through intiial design thought of.
+        length:0,
+        mail:'namankalrabhiwani54@gmail.com',
+        queries:[],
+        queries_length:0,
+
+    })
+  });
+  
+  ///////////////
+  
 app.post('/admin-login', (req, res, next) => {
     var adminEmail = req.body.email;
     var adminPassword = req.body.psw;
