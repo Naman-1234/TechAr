@@ -38,6 +38,17 @@ app.get('/admin-panel', (req, res, next) => {
     res.render('admin-login', {});
 });
 
+app.post('/admin-login', (req, res, next) => {
+    var adminEmail = req.body.email;
+    var adminPassword = req.body.psw;
+    if (adminEmail === 'nlok5923@gmail.com' && adminPassword === '123') {
+      res.render('admin-panel', {});
+    } else {
+    //   var userVerified = false;
+      res.render('admin-login', {});
+    }
+});
+
 app.listen(port, () => {
     console.log('Server Started at ' + port);
 });
