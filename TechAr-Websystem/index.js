@@ -42,6 +42,12 @@ app.get('/admin-panel', (req, res, next) => {
     res.render('admin-login', {});
 });
 
+//* Adding get request path for Team Page
+app.get("/team",(req,res)=>{
+  res.render('Team',{})
+});
+
+
 app.post('/admin-panel', async (req, res, next) => {
   const InstructorPassword = req.body.psw;
   const rounds = 10;
