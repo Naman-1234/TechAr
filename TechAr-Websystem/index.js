@@ -97,7 +97,7 @@ app.post('/sign-in', async (req, resp, next) => {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.get("/dashboard/generate",(req,res)=>{
-    res.render('Generator',{});
+    res.render('Generator',{action:"notdone"});
 })
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -165,8 +165,8 @@ app.post('/dashboard/generate',async (req, res, next) => {
       });
       // res.render('Success', {});
       console.log("occur")
-      res.redirect("/success")
-      // res.render('Generator',{action:"done"})
+      // res.redirect("/success")
+      res.render('Generator',{action:"done"})
     })
     .catch((err) => {
       console.log('error occur', err);
