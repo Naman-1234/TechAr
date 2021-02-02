@@ -37,7 +37,7 @@ already built features of web system.
 
 ## Current development status 
 
-We had concurrently started the work on phase 1 and phase 2 due to limited amount of time via giving more priority to phases 1 developments with completion of some basic of pages phase 2 development Once phase 1 development get's complted our whole priority will shift to phase 2 development. 
+We had concurrently started the working on phase 1 and phase 2 due to limited amount of time via giving more priority to phases 1 development with completion of some basic pages phase 2 development. Once phase 1 development get's completed our whole priority will shift to phase 2 development. 
 
 ### status:
 1. Conceptor: 80% development completed
