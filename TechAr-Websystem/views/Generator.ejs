@@ -62,6 +62,7 @@
       cols="50"
       id="video_url"
     ></textarea>
+    <!-- //  this were sample 3d models for testing purpose  -->
     <div class="form-group">
         <label for="model">Select Model</label>
         <select class="form-control" id="model" name="model">
@@ -89,7 +90,7 @@
 <script src="templates/texteditor/quill/highlight.pack.js"></script>
 <script src="templates/texteditor/quill/quill.min.js"></script>
 <script>
-
+//using quill text editor for producing rich text
 var toolbarOptions = [
 ['bold', 'italic', 'underline', 'strike', 'blockquote', 'code-block'],
 [{ header: [1, 2, 3, 4, 5, 6, false] }],
@@ -116,4 +117,42 @@ imageCompress: {
 placeholder: 'Create your lecture gist here',
 theme: 'snow',
 });
+// function to send data to post route using xhr request 
+async function customSubmit() {
+  var xhr = new XMLHttpRequest();
+    //*First generate  then path then option
+    xhr.open('POST', '/dashboard/generate', true);
+    // Format of data sent ,it tells server or browser type of data to be recieved
+   await xhr.setRequestHeader('Content-Type', 'application/json');
+    let Insemail = document.getElementById('Insemail');
+    Insemail = Insemail.value;
+    let ltitle = document.getElementById('ltitle');
+    ltitle = ltitle.value;
+    let note = document.getElementById('note');
+    note = note.value;
+    let video_url = document.getElementById('video_url');
+    video_url = video_url.value;
+    let subject = document.getElementById('subject');
+    subject_name = subject.value;
+    let model_name = document.getElementById('model');
+    model_name = model_name.value;
+    let quillDelta = document.getElementById('editor');
+    quillDelta = quillDelta.innerHTML;                  
+    var arr = quill.getContents();
+    console.log(arr);
+    var narr = JSON.stringify(arr, null, 2);
+    console.log(narr)
+   var resp = await xhr.send(
+      JSON.stringify({
+        value: quill.root.innerHTML,
+        Insemail: Insemail,
+        ltitle: ltitle,
+        note: note,
+        video_url: video_url,
+        subject_name: subject_name,
+        model: model_name,
+        quillDelta: narr
+      })
+    );
+  }
 </script>

@@ -20,7 +20,7 @@ app.use(express.static(path.join(__dirname + '/../public')));
 app.use(express.static('public'));
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// connectiong out map with mongodb atlas 
+// connecting out map with mongodb atlas 
 mongoose
   .connect('mongodb+srv://creator:nnNN@@22@cluster0.bkrcv.mongodb.net/Images', {
     useNewUrlParser: true,
@@ -32,6 +32,20 @@ mongoose
   .catch((err) => {
     console.log('not connected');
   });
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// this function help us to make a random string of n length
+function makeid(length) {
+  var result = '';
+  var characters =
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  var charactersLength = characters.length;
+  for (var i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 app.get("/",(req,res)=>{
     res.render("frontpage",{})
@@ -85,6 +99,79 @@ app.post('/sign-in', async (req, resp, next) => {
 app.get("/dashboard/generate",(req,res)=>{
     res.render('Generator',{});
 })
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// this will lecture forming request
+app.post('/dashboard/generate',async (req, res, next) => {
+
+  console.log("printing request body",req.body);
+  var id = await makeid(6);
+  let Mail = req.body.Insemail;
+  let lectureid = id;
+  let lecture_title = req.body.ltitle;
+  let lecture_para = req.body.value;
+  let lecture_additional_note = req.body.note;
+  let lecture_video_link = req.body.video_url;
+  let lecture_reso = req.body.extras;
+  let lecture_subject = req.body.subject_name;
+  let model_name = req.body.model;
+  let quillDelta = req.body.quillDelta;
+  // let customModelName = req.body.filename;
+
+  let lectureData = new lectureNote({
+    InsEmail: Mail,
+    lecture_id: lectureid,
+    title: lecture_title,
+    para: lecture_para,
+    additional_note: lecture_additional_note,
+    video_link: lecture_video_link,
+    resources: lecture_reso,
+    subject_name: lecture_subject,
+    model: model_name,
+    quillDelta: quillDelta
+    // customModelName: customModelName
+  });
+  var ob1 = await lectureData
+    .save()
+    .then((doc) => {
+      console.log(doc);
+      var emailData = `Dear Instructor <br> you can take a preview of your lecture content at https://tech-ar.herokuapp.com/${id} <br><br><br> Thanks and Regards<br> techAr services`;
+      console.log('data saved successfully', doc.lecture_id);
+      // defining transporter to send mail to the instructor with lecture link once lecture is created
+      var transporter = mailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 587,
+        secure: false,
+        service: 'gmail',
+        auth: {
+          user: 'techar.service@gmail.com',
+          pass: 'TechAr@9907',
+        },
+      });
+
+      var mailOptions = {
+        from: 'techar.service@gmail.com',
+        to: req.body.Insemail,
+        subject: 'Your lecture is live',
+        html: emailData,
+      };
+
+      transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+      });
+      // res.render('Success', {});
+      console.log("occur")
+      res.redirect("/success")
+      // res.render('Generator',{action:"done"})
+    })
+    .catch((err) => {
+      console.log('error occur', err);
+    });
+});
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.get('/admin-panel', (req, res, next) => {
@@ -178,6 +265,11 @@ app.post('/admin-login', (req, res, next) => {
 app.get("/team",(req,res)=>{
   res.render('Team',{})
 });
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//temporary route to display success page
+app.get("/success",(req,res)=>{
+  res.render('Success',{})
+})
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // serving application 
