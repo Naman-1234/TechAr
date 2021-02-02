@@ -43,10 +43,10 @@ We had concurrently started the working on phase 1 and phase 2 due to limited am
 1. Conceptor: 80% development completed 
 2. TechAr Websystem: 
    - Team page [T]
-   - Login and Sign up [T]
+   - Login and Sign up [C]
    - Dashboard [I]
    - Generator [I] 
-   - Front page [T]
+   - Front page [C]
 
 <b>Note</b> : this page will be regularly updated to track the development flow.
 ### Legend
