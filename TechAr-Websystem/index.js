@@ -178,6 +178,14 @@ app.get('/admin-panel', (req, res, next) => {
     res.render('admin-login', {});
 });
 
+//* Adding get request path for Team Page
+app.get("/team",(req,res)=>{
+  res.render('Team',{})
+});
+app.get("/about",(req,res)=>{
+  res.render('why_us',{})
+})
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // this post route will take data provided by admin and save it as a instructor credentials 
 app.post('/admin-panel', async (req, res, next) => {
