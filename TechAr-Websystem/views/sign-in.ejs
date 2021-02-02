@@ -8,6 +8,10 @@
     <input type="password" id="inputPassword" class="form-control mt-2" placeholder="Password" name="usrpsw" required>
     <button class="btn btn-size btn-primary btn-block mt-2" type="submit">Sign in</button>
   </form>
+  <% status = auth %>
+  <% if(!status) { %>
+   <h1>Not authenticated</h1>
+  <%}%>
 </div>
 </body>
 <%- include('./Partials/footer.ejs') -%>

@@ -3,6 +3,7 @@ const port = process.env.PORT || 5000;
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const path = require('path')
+const lectureNote = require('./models/LectureDetails');
 const app = express();
 const instructorModel = require('./models/InstructorDetails');
 const bcrypt = require('bcrypt');
@@ -35,7 +36,7 @@ app.get("/",(req,res)=>{
 
 // setted get request for testing if pages are rendering properly or not 
 app.get('/sign-in', (req, res) => {
-    res.render('sign-in', {});
+    res.render('sign-in', {auth:true});
 });
 app.get("/dashboard/generate",(req,res)=>{
     res.render('Generator',{});
