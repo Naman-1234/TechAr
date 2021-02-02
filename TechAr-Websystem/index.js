@@ -3,11 +3,14 @@ const port = process.env.PORT || 5000;
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const path = require('path')
+const lectureNote = require('./models/LectureDetails');
 const app = express();
 const instructorModel = require('./models/InstructorDetails');
 const bcrypt = require('bcrypt');
+var isInstructorAuthenticated = false;
+var InstructorMail = '';
 var mailer = require('nodemailer');
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // using middlwares 
 app.use(bodyParser.json({ limit: '10mb', extended: true }));
 app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
@@ -16,6 +19,7 @@ app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname + '/../public')));
 app.use(express.static('public'));
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // connectiong out map with mongodb atlas 
 mongoose
   .connect('mongodb+srv://creator:nnNN@@22@cluster0.bkrcv.mongodb.net/Images', {
@@ -33,13 +37,56 @@ app.get("/",(req,res)=>{
     res.render("frontpage",{})
 })
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // setted get request for testing if pages are rendering properly or not 
 app.get('/sign-in', (req, res) => {
-    res.render('sign-in', {});
+    res.render('sign-in', {auth:true});
 });
+
+// setted post route checking for correct instructor login 
+app.post('/sign-in', async (req, resp, next) => {
+  var usrEmail = req.body.usremail;
+  var temp;
+  temp = await instructorModel
+    .find({ email: usrEmail })
+    .then(async (doc) => {
+      if(doc.length !=0){
+      var ob1;
+      ob1 = await bcrypt.compare(
+        req.body.usrpsw,
+        doc[0].password,
+        (err, res) => {
+          if (err) {
+            resp.render('sign-in', {auth: false});
+            console.error(err);
+            return;
+          }
+          
+          InstructorMail = req.body.usremail;
+          isInstructorAuthenticated = res;
+          if(res){
+          resp.redirect("/dashboard")
+          }
+          else{
+          resp.render('sign-in', {auth: false});
+          }
+        }
+      );
+      }else{
+        resp.render('sign-in', {auth: false});
+      }
+    })
+    .catch((err) => {
+      console.log('error finding user', err);
+    });
+});
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.get("/dashboard/generate",(req,res)=>{
     res.render('Generator',{});
 })
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.get('/admin-panel', (req, res, next) => {
     res.render('admin-login', {});
 });
@@ -52,6 +99,7 @@ app.get("/about",(req,res)=>{
   res.render('why_us',{})
 })
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // this post route will take data provided by admin and save it as a instructor credentials 
 app.post('/admin-panel', async (req, res, next) => {
   const InstructorPassword = req.body.psw;
@@ -108,7 +156,7 @@ app.post('/admin-panel', async (req, res, next) => {
   });
   res.render('FrontPage', {});
 });
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // test route for testing correct rendering of dashboard page 
 app.get('/dashboard', (req, res) => {
     res.render('dashboard',{
@@ -120,7 +168,8 @@ app.get('/dashboard', (req, res) => {
 
     })
   });
-  
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // basically this route will help us to validate if admin is login in or not 
 app.post('/admin-login', (req, res, next) => {
     var adminEmail = req.body.email;
@@ -133,6 +182,13 @@ app.post('/admin-login', (req, res, next) => {
     }
 });
 
+//* Adding get request path for Team Page
+app.get("/team",(req,res)=>{
+  res.render('Team',{})
+});
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// serving application 
 app.listen(port, () => {
     console.log('Server Started at ' + port);
 });
