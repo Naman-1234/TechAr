@@ -7,6 +7,7 @@ const lectureNote = require('./models/LectureDetails');
 const app = express();
 const instructorModel = require('./models/InstructorDetails');
 const bcrypt = require('bcrypt');
+const query  = require("./models/query");
 var isInstructorAuthenticated = false;
 var InstructorMail = '';
 var mailer = require('nodemailer');
@@ -244,16 +245,17 @@ app.post('/admin-panel', async (req, res, next) => {
   res.render('FrontPage', {});
 });
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// test route for testing correct rendering of dashboard page 
+// rendering lecture created by particular instructor 
 app.get('/dashboard', (req, res) => {
-    res.render('dashboard',{
-        //TODO Remember We need to give it this data through a database, Currently managing these properties through intiial design thought of.
-        length:0,
-        mail:'namankalrabhiwani54@gmail.com',
-        queries:[],
-        queries_length:0,
-
-    })
+    lectureNote
+      .find({ InsEmail: InstructorMail })
+      .then((doc) => {
+        query.find({InstructorEmail: InstructorMail})
+        .then((doc_2)=>{
+           res.render('dashboard',{doc, length: doc.length ,mail: InstructorMail, queries: doc_2, queries_length: doc_2.length});
+        })
+      })
+      .catch((err) => console.log('error finding records',err));
   });
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -277,6 +279,18 @@ app.get("/team",(req,res)=>{
 //temporary route to display success page
 app.get("/success",(req,res)=>{
   res.render('Success',{})
+})
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//this route will handle all delete request
+app.get("/dashboard/del/:id",(req,res,next)=>{
+  lectureNote.remove({lecture_id:req.params.id}, function(err, result) {
+    if (err) {
+      console.err(err);
+    } else {
+      res.redirect('/dashboard')
+      // redirect to all lecture route when using webui to delete cards fastly
+    }
+  });
 })
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
