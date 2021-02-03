@@ -46,6 +46,60 @@ function makeid(length) {
   return result;
 }
 
+// this will sort all lecture subject wise
+dynamicSort=function(property) 
+   {
+     var sortOrder = 1;
+     if(property[0] === "-") 
+     {
+         sortOrder = -1;
+         property = property.substr(1);
+    } 
+       return function (a,b) { 
+           if(sortOrder == -1){
+               return b[property].localeCompare(a[property]);
+           }else{ 
+               return a[property].localeCompare(b[property]); } 
+           }
+  }
+
+convertTo2d=function(doc) {
+      var arrlen =1 ;
+      for(var i=0;i<doc.length-1;i++){
+      if(doc[i].subject_name != doc[i+1].subject_name){
+        arrlen++;
+      }
+     } 
+     let arr = new Array(arrlen +1);   
+      for(let i=0;i<(arrlen+1);i++){
+        arr[i] = [];
+      }
+      arrlen =0; 
+      arr[0].push(doc[0]);
+       let j=0;
+       for(let i=1;i<doc.length;i++) {
+           if(doc[i-1].subject_name===doc[i].subject_name) {
+               arr[j].push(doc[i]);
+           }
+           else {
+               j++;
+               arr[j].push(doc[i]);
+           }
+       }
+       return arr;
+   } 
+checksubject=function(value) {
+if(value.toLowerCase()==="physics")
+return "physics";
+if(value.toLowerCase()==="chemistry")
+return "chemistry";
+if(value.toLowerCase()==="math"||value.toLowerCase()==="mathematics"||value.toLowerCase()==="maths")
+return "maths";
+if(value.toLowerCase()==="biology")
+return "biology";
+return "";
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 app.get("/",(req,res)=>{
@@ -257,8 +311,41 @@ app.get('/dashboard', (req, res) => {
       })
       .catch((err) => console.log('error finding records',err));
   });
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//set get route for rendering all added lecture from where student can access them  
+app.get("/all-lecture",(req,res)=>{
+    lectureNote.find().then( async (doc)=>{
+      let i=0;
+      await doc.map((data,key)=>{
+        if(data.subject_name != null)
+        data.subject_name = data.subject_name.toLowerCase();
+        
+      })
+      // await doc.filter(redundantLectures);
+      let finalDoc = doc.filter(function(e){
+        return e.subject_name!=null 
+      })
+      finalDoc.sort(dynamicSort("subject_name"))
+      
+      var arrlen =0 ;
+      for(var j=0;j<finalDoc.length-1;j++){
+        if(finalDoc[j].subject_name != finalDoc[j+1].subject_name){
+          arrlen++;
+        }
+      } 
+    
+      var arr = new Array(arrlen+1);
+      for(let i=0;i<(arrlen+1);i++){
+        arr[i] =[];
+      }
+      arrlen =0 ;
+       arr=convertTo2d(finalDoc)
+       
+       res.render('lectures',{lectureArray:arr, length:arr.length,mail: null,checksubject:checksubject})
+    }).catch((err)=>console.log("error finding records",err))
+  });
+  
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // basically this route will help us to validate if admin is login in or not 
 app.post('/admin-login', (req, res, next) => {
     var adminEmail = req.body.email;

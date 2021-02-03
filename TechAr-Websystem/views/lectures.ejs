@@ -1,0 +1,78 @@
+<%- include('./Partials/header.ejs') %>
+<link href="css/lectures.css" rel="stylesheet">
+<div class=" colorContainer">
+<% for(i=0;i<length-1;i++) {%>
+    <div class="heading text-center">
+      <h1 class="text-capitalize " id="<%= lectureArray[i][0].subject_name %>"> <%= lectureArray[i][0].subject_name %></h1>
+     </div> 
+     <% var value="" %>
+     <% value=checksubject(lectureArray[i][0].subject_name) %>
+    <div class="container-cards">
+      <div class="row text-center">
+       <% for(let j=0;j<lectureArray[i].length;j++) {%>
+        <% if(lectureArray[i]!=='undefined' && lectureArray[i][0]!=='undefined'){ %>
+         
+          <% var del_req ="http://localhost:3000/del/"+ lectureArray[i][j].lecture_id %>
+          <% var src = "http://localhost:3000/lecture/" + lectureArray[i][j].lecture_id %>
+
+        <form method="GET" action="<%= src %>">
+                     <div class="col-md-4">
+                     <div class="card stylecard mt-3">
+
+                      <div class="view overlay">
+                       <% if(value===""){ %>
+                        <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/photo9.jpg" alt="Card image cap">
+                          <% } else { %>
+                              <% let source="Images/${value}.jpg" %>
+                              
+                          <img class="card-img-top" src=<%= `Images/${value}.jpg` %> alt="Card image cap">
+                          <% } %>
+                        <a>
+                          <div class="mask rgba-white-slight"></div>
+                        </a>
+                      </div>
+                    
+                    
+                      <!-- Card content -->
+                      <div class="card-body">
+                    
+                        <!-- Title -->
+                        <div class=" article-heading">
+                        <h3 class="card-title"><%= lectureArray[i][j].title %></h4>
+                        </div>
+                        <hr>
+                        <!-- Text -->
+                        <p class="card-text set-width"><%= lectureArray[i][j].additional_note.substring(0,Math.min(101,lectureArray[i][j].additional_note.length)) %></p>
+                        <div class="text-center">
+                        <!-- <button class="btn  btn-rounded btn-md btn-primary text-center">See Whole Lecture</button> -->
+                        <!-- currently this link wont work as it's complimentry route hadn't added in index.js  -->
+                        <a href=<%= src %> type="button" class="btn btn-rounded btn-md btn-primary text-center">See Whole Lecture</a>
+                      </div>
+                      </div>
+                      <!-- uncomment below line for deleting card using web ui temporarily -->
+                      <!-- <a href="<%= del_req %>" class="btn btn-primary">Delete</a>  -->
+                     
+                    </div>
+          <!-- </div> -->
+        </div>
+         </form>
+         <% } %> 
+         <% } %>
+    </div>
+    </div>
+    <% } %>
+  </div>
+</body>
+<script>
+  let para=document.getElementsByClassName('card-text');
+  if(para.clientHeight>'0px')
+  {
+   para.style.overflowY='auto';
+   alert('1');
+  }
+  async function toggleClass()
+  {
+     document.getElementsByClassName('set-width').classList.toggle('clicked-ellipsis');
+  }
+</script>
+</html>
