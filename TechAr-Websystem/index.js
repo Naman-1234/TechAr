@@ -7,6 +7,7 @@ const lectureNote = require('./models/LectureDetails');
 const app = express();
 const instructorModel = require('./models/InstructorDetails');
 const bcrypt = require('bcrypt');
+const query  = require("./models/query");
 var isInstructorAuthenticated = false;
 var InstructorMail = '';
 var mailer = require('nodemailer');
@@ -20,7 +21,7 @@ app.use(express.static(path.join(__dirname + '/../public')));
 app.use(express.static('public'));
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// connectiong out map with mongodb atlas 
+// connecting out map with mongodb atlas 
 mongoose
   .connect('mongodb+srv://creator:nnNN@@22@cluster0.bkrcv.mongodb.net/Images', {
     useNewUrlParser: true,
@@ -32,6 +33,74 @@ mongoose
   .catch((err) => {
     console.log('not connected');
   });
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// this function help us to make a random string of n length
+function makeid(length) {
+  var result = '';
+  var characters =
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  var charactersLength = characters.length;
+  for (var i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+}
+
+// this will sort all lecture subject wise
+dynamicSort=function(property) 
+   {
+     var sortOrder = 1;
+     if(property[0] === "-") 
+     {
+         sortOrder = -1;
+         property = property.substr(1);
+    } 
+       return function (a,b) { 
+           if(sortOrder == -1){
+               return b[property].localeCompare(a[property]);
+           }else{ 
+               return a[property].localeCompare(b[property]); } 
+           }
+  }
+
+convertTo2d=function(doc) {
+      var arrlen =1 ;
+      for(var i=0;i<doc.length-1;i++){
+      if(doc[i].subject_name != doc[i+1].subject_name){
+        arrlen++;
+      }
+     } 
+     let arr = new Array(arrlen +1);   
+      for(let i=0;i<(arrlen+1);i++){
+        arr[i] = [];
+      }
+      arrlen =0; 
+      arr[0].push(doc[0]);
+       let j=0;
+       for(let i=1;i<doc.length;i++) {
+           if(doc[i-1].subject_name===doc[i].subject_name) {
+               arr[j].push(doc[i]);
+           }
+           else {
+               j++;
+               arr[j].push(doc[i]);
+           }
+       }
+       return arr;
+   } 
+checksubject=function(value) {
+if(value.toLowerCase()==="physics")
+return "physics";
+if(value.toLowerCase()==="chemistry")
+return "chemistry";
+if(value.toLowerCase()==="math"||value.toLowerCase()==="mathematics"||value.toLowerCase()==="maths")
+return "maths";
+if(value.toLowerCase()==="biology")
+return "biology";
+return "";
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 app.get("/",(req,res)=>{
     res.render("frontpage",{})
@@ -83,8 +152,81 @@ app.post('/sign-in', async (req, resp, next) => {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.get("/dashboard/generate",(req,res)=>{
-    res.render('Generator',{});
+    res.render('Generator',{action:"notdone"});
 })
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// this will lecture forming request
+app.post('/dashboard/generate',async (req, res, next) => {
+
+  console.log("printing request body",req.body);
+  var id = await makeid(6);
+  let Mail = req.body.Insemail;
+  let lectureid = id;
+  let lecture_title = req.body.ltitle;
+  let lecture_para = req.body.value;
+  let lecture_additional_note = req.body.note;
+  let lecture_video_link = req.body.video_url;
+  let lecture_reso = req.body.extras;
+  let lecture_subject = req.body.subject_name;
+  let model_name = req.body.model;
+  let quillDelta = req.body.quillDelta;
+  // let customModelName = req.body.filename;
+
+  let lectureData = new lectureNote({
+    InsEmail: Mail,
+    lecture_id: lectureid,
+    title: lecture_title,
+    para: lecture_para,
+    additional_note: lecture_additional_note,
+    video_link: lecture_video_link,
+    resources: lecture_reso,
+    subject_name: lecture_subject,
+    model: model_name,
+    quillDelta: quillDelta
+    // customModelName: customModelName
+  });
+  var ob1 = await lectureData
+    .save()
+    .then((doc) => {
+      console.log(doc);
+      var emailData = `Dear Instructor <br> you can take a preview of your lecture content at https://tech-ar.herokuapp.com/${id} <br><br><br> Thanks and Regards<br> techAr services`;
+      console.log('data saved successfully', doc.lecture_id);
+      // defining transporter to send mail to the instructor with lecture link once lecture is created
+      var transporter = mailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 587,
+        secure: false,
+        service: 'gmail',
+        auth: {
+          user: 'techar.service@gmail.com',
+          pass: 'TechAr@9907',
+        },
+      });
+
+      var mailOptions = {
+        from: 'techar.service@gmail.com',
+        to: req.body.Insemail,
+        subject: 'Your lecture is live',
+        html: emailData,
+      };
+
+      transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+      });
+      // res.render('Success', {});
+      console.log("occur")
+      // res.redirect("/success")
+      res.render('Generator',{action:"done"})
+    })
+    .catch((err) => {
+      console.log('error occur', err);
+    });
+});
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.get('/admin-panel', (req, res, next) => {
@@ -157,19 +299,53 @@ app.post('/admin-panel', async (req, res, next) => {
   res.render('FrontPage', {});
 });
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// test route for testing correct rendering of dashboard page 
+// rendering lecture created by particular instructor 
 app.get('/dashboard', (req, res) => {
-    res.render('dashboard',{
-        //TODO Remember We need to give it this data through a database, Currently managing these properties through intiial design thought of.
-        length:0,
-        mail:'namankalrabhiwani54@gmail.com',
-        queries:[],
-        queries_length:0,
-
-    })
+    lectureNote
+      .find({ InsEmail: InstructorMail })
+      .then((doc) => {
+        query.find({InstructorEmail: InstructorMail})
+        .then((doc_2)=>{
+           res.render('dashboard',{doc, length: doc.length ,mail: InstructorMail, queries: doc_2, queries_length: doc_2.length});
+        })
+      })
+      .catch((err) => console.log('error finding records',err));
   });
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//set get route for rendering all added lecture from where student can access them  
+app.get("/all-lecture",(req,res)=>{
+    lectureNote.find().then( async (doc)=>{
+      let i=0;
+      await doc.map((data,key)=>{
+        if(data.subject_name != null)
+        data.subject_name = data.subject_name.toLowerCase();
+        
+      })
+      // await doc.filter(redundantLectures);
+      let finalDoc = doc.filter(function(e){
+        return e.subject_name!=null 
+      })
+      finalDoc.sort(dynamicSort("subject_name"))
+      
+      var arrlen =0 ;
+      for(var j=0;j<finalDoc.length-1;j++){
+        if(finalDoc[j].subject_name != finalDoc[j+1].subject_name){
+          arrlen++;
+        }
+      } 
+    
+      var arr = new Array(arrlen+1);
+      for(let i=0;i<(arrlen+1);i++){
+        arr[i] =[];
+      }
+      arrlen =0 ;
+       arr=convertTo2d(finalDoc)
+       
+       res.render('lectures',{lectureArray:arr, length:arr.length,mail: null,checksubject:checksubject})
+    }).catch((err)=>console.log("error finding records",err))
+  });
+  
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // basically this route will help us to validate if admin is login in or not 
 app.post('/admin-login', (req, res, next) => {
     var adminEmail = req.body.email;
@@ -186,6 +362,23 @@ app.post('/admin-login', (req, res, next) => {
 app.get("/team",(req,res)=>{
   res.render('Team',{})
 });
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//temporary route to display success page
+app.get("/success",(req,res)=>{
+  res.render('Success',{})
+})
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//this route will handle all delete request
+app.get("/dashboard/del/:id",(req,res,next)=>{
+  lectureNote.remove({lecture_id:req.params.id}, function(err, result) {
+    if (err) {
+      console.err(err);
+    } else {
+      res.redirect('/dashboard')
+      // redirect to all lecture route when using webui to delete cards fastly
+    }
+  });
+})
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // serving application 

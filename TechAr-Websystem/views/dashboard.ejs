@@ -1,6 +1,6 @@
 <%- include('./Partials/header.ejs') -%>
 
-<div class="modal fade" id="myModal" role="dialog">
+  <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-head  er">
@@ -9,19 +9,25 @@
         <div class="modal-body">
           <% if(queries_length!=0){ %>
             <div class="query__list">
-                <% for(var j=0;j<queries_length;j++) { %>
+              <% for(var j=0;j<queries_length;j++) { %>
                 <div class="query__card">
                   <div class="query__header">
-                    <h4 class="student__name"><%= queries[j].name %></h4>
-                    <p class="query__date"><%= queries[j].date %></p>
+                    <h4 class="student__name">
+                      <%= queries[j].name %>
+                    </h4>
+                    <p class="query__date">
+                      <%= queries[j].date %>
+                    </p>
                   </div>
                   <div class="query__content">
-                    <p><%= queries[j].query_text %></p>
+                    <p>
+                      <%= queries[j].query_text %>
+                    </p>
                   </div>
-                    <div class="query__footer">
+                  <div class="query__footer">
                     <h4 class="student__mail"">Reply to: <%= queries[j].student_mail %></h4>
-                    <% var delete_query = "/dashboard/" + queries[j].query_id %>
-                    <p><a href="<%= delete_query %>" class="close__link">Mark as resolved</a> </p> 
+                    <% var delete_query = " /dashboard/" + queries[j].query_id %>
+                      <p><a href="<%= delete_query %>" class="close__link">Mark as resolved</a> </p>
                   </div>
                 </div>
                 <% } %>
@@ -29,14 +35,71 @@
             <% } else {%>
               <h1 class="text-center">No query raised &#128516; </h1>
               <% } %>
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
   </div>
-</div>
-<div class="d-flex justify-content-between container mt-5">
-<button type="button" class="btn btn-primary doubt-button btn-lg" data-toggle="modal" data-target="#myModal">See all raised queries</button>
-<a href="/dashboard/generate" class="btn btn-primary btn-lg mr-5">Proceed to create lecture</a>
-</div>
+  </div>
+  <div class="d-flex justify-content-between container mt-5">
+    <button type="button" class="btn btn-primary doubt-button btn-lg" data-toggle="modal" data-target="#myModal">See all
+      raised queries</button>
+    <a href="/dashboard/generate" class="btn btn-primary btn-lg mr-5">Proceed to create lecture</a>
+  </div>
 
+  <div class="container mt-5">
+    <h1 class="text-center"> All lecture add by you </h1>
+    <div class="row">
+      <% for(var i=0;i<length;i++) {%>
+
+        <% var src="http://localhost:3000/lecture/" + doc[i].lecture_id %>
+        <!-- below route are pending to be formed -->
+          <!-- <% var del_req="http://localhost:3000/dashboard/del/" +doc[i].lecture_id %> -->
+            <!-- <% var edit="http://localhost:3000/dashboard/edit/" +doc[i].lecture_id %> -->
+              <!-- <h1><%= src %></h1> -->
+              <div class="col-md-4">
+                <div class="card stylecard mt-3">
+
+                  <div class="view overlay">
+                    <!-- //working on this feature -->
+                    <!-- <a class="btn btn-rounded btn-md btn-primary edit__btn btn-circle btn-sm" href="<%= edit %>">E</a> -->
+                    <img class="card-img-top" src="Images/physics.jpg" alt="Card image cap">
+                    <a>
+                      <div class="mask rgba-white-slight"></div>
+                    </a>
+                  </div>
+
+
+                  <div class="card-body">
+
+                    <!-- Title -->
+                    <h3 class="card-title text-center text-capitalize">
+                      <%= doc[i].title %>
+                        </h4>
+                        <hr>
+                        <!-- Text -->
+                        <p class="card-text set-width">
+                          <%= doc[i].additional_note %>
+                        </p>
+                        <div class="text-center">
+
+                          <div class="row">
+                            <% setMail=mail %>
+                              <% if(setMail) { %>
+                                <div class="col-sm">
+                                  <a class="btn  btn-rounded btn-md btn-primary text-center"
+                                    href="<%= del_req %>">Delete</a>
+                                  <% } %>
+                                </div>
+                          </div class="col-sm">
+                          <a class="btn  btn-rounded btn-md btn-primary text-center" href="<%= src %>">See Whole
+                            Lecture</a>
+
+                        </div>
+                  </div>
+
+                </div>
+              </div>
+              <% } %>
+    </div>
+  </div>

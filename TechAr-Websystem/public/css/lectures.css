@@ -1,0 +1,57 @@
+.colorContainer
+{
+  background-color: rgb(4, 52, 141);
+}
+.heading{
+  /* background-color: rgb(3, 109, 151); */
+  height: 20vh;
+  background-color: #fff;
+}
+.heading h1
+{
+  font-size:100px;
+  /* color:#fff; */
+  color:#000;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.heading h1:hover{
+  transform: scale(1.1);
+  color:#000;
+  /* transform: translateZ(30px); */
+}
+.row
+{
+  padding-top:20px;
+  padding-bottom: 20px;
+}
+.stylecard
+{
+  min-width:2vw;
+  max-width:40vw;
+  width:20vw;
+  /* width:min-content; */
+  height:auto;
+  margin-top:2.5%;
+  overflow: auto;
+}
+.stylecard:hover{
+  transform: scale(1.1);
+  transform: translate(0px,0px,20px);
+
+}
+
+.container-cards .row
+{
+display: grid;
+grid-template-columns:1fr 1fr 1fr 1fr;
+grid-template-rows: auto;
+justify-items: center;
+}
+
+.set-width {
+  white-space: nowrap; 
+  width: 95%; 
+  overflow: hidden;
+  text-overflow: ellipsis; 
+}
