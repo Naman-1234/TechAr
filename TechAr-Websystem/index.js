@@ -230,7 +230,7 @@ app.post('/dashboard/generate',async (req, res, next) => {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.get('/admin-panel', (req, res, next) => {
-    res.render('admin-login', {});
+    res.render('admin-login', {auth:true});
 });
 
 //* Adding get request path for Team Page
