@@ -408,8 +408,8 @@ app.get('/lecture/:id', (req, res, next) => {
       insdbtmail = doc[0].InsEmail;
       lecture_id = doc[0].lecture_id;
       var arr = [];
-      arr = doc[0].model;
-      console.log(Object.entries(arr))
+      // arr = doc[0].model;
+      // console.log(Object.entries(arr))
       res.render('lecture', {
         lecture_title: doc[0].title,
         lecture_para: doc[0].para.replace(/["]+/g, "'"),
@@ -417,8 +417,8 @@ app.get('/lecture/:id', (req, res, next) => {
         src: doc[0].video_link,
         reso: doc[0].resources,
         id: doc[0].lecture_id,
-        model_name: doc[0].model,
-        models_length: Object.keys(arr).length
+        model_name: doc[0].model
+        // models_length: Object.keys(arr).length
 
       });
     })
@@ -474,6 +474,35 @@ app.post("/query",async (req,res)=>{
   res.redirect(`lecture/${lecture_id}`);
 });
 
+//below routes handle updating lecture feature
+app.get("/dashboard/edit/:id",(req,res,next)=>{
+  lectureNote.find({lecture_id:req.params.id}).then((value)=>{
+    console.log(value)
+    res.render('edit_generator',{value:value});
+  }).catch((err)=>{
+    console.log(err);
+  })
+  
+});
+
+app.post("/edit/:id",async (req,res,next)=>{
+  console.log(req.body);
+  const filter = {lecture_id: req.params.id}
+  const update = {
+    InsEmail: req.body.Insemail,
+    title: req.body.ltitle,
+    para : req.body.value,
+    additional_note: req.body.note,
+    video_link: req.body.video_url,
+    subject_name: req.body.subject_name
+    // model: req.body.model
+  }
+  console.log(update)
+  var updatedData = await lectureNote.findOneAndUpdate(filter, update, {
+    new: true
+  });
+  console.log("ye updated data hai",updatedData);
+})
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // serving application 
 app.listen(port, () => {

@@ -55,15 +55,15 @@
 
         <% var src="http://localhost:5000/lecture/" + doc[i].lecture_id %>
         <!-- below route are pending to be formed -->
-          <!-- <% var del_req="http://localhost:3000/dashboard/del/" +doc[i].lecture_id %> -->
-            <!-- <% var edit="http://localhost:3000/dashboard/edit/" +doc[i].lecture_id %> -->
+          <% var del_req="http://localhost:5000/dashboard/del/" +doc[i].lecture_id %>
+            <% var edit="http://localhost:5000/dashboard/edit/" +doc[i].lecture_id %>
               <!-- <h1><%= src %></h1> -->
               <div class="col-md-4">
                 <div class="card stylecard mt-3">
 
                   <div class="view overlay">
                     <!-- //working on this feature -->
-                    <!-- <a class="btn btn-rounded btn-md btn-primary edit__btn btn-circle btn-sm" href="<%= edit %>">E</a> -->
+                    <a class="btn btn-rounded btn-md btn-primary edit__btn btn-circle btn-sm" href="<%= edit %>">E</a>
                     <img class="card-img-top" src="Images/physics.jpg" alt="Card image cap">
                     <a>
                       <div class="mask rgba-white-slight"></div>
