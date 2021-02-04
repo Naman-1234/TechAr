@@ -40,13 +40,16 @@ already built features of web system.
 We had concurrently started the working on phase 1 and phase 2 due to limited amount of time via giving more priority to phases 1 development with completion of some basic pages phase 2 development. Once phase 1 development get's completed our whole priority will shift to phase 2 development. 
 
 ### status:
-1. Conceptor: 99% development completed 
+1. Conceptor: [C] 
 2. TechAr Websystem: 
    - Team page [C]
    - Login and Sign up [C]
    - Dashboard [I]
    - Generator [T] 
    - Front page [C]
+   - Leture page [T]
+   - Lectures Page [T]
+   - Admin panel [C]
 
 <b>Note</b> : this page will be regularly updated to track the development flow.
 ### Legend
