@@ -26,3 +26,8 @@
     font-size: 20px; 
     text-align: center; 
   } 
+
+.input__search {
+    background-color: aliceblue;
+    height: 7vh;
+}

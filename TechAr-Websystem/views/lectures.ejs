@@ -1,7 +1,7 @@
 <%- include('./Partials/header.ejs') %>
 <link rel="stylesheet" href="css/lectures.css">
 <div class=" d-flex justify-content-center align-items-center text-center align-search">
-      <input class="form-control"   type="search" placeholder="Search"  aria-label="Search" id="search_bar" onkeyup="search()">
+      <input class="form-control input__search"   type="search" placeholder="Search"  aria-label="Search" id="search_bar" onkeyup="search()">
     </div>
 <div class="all-lecture">
 
@@ -19,7 +19,7 @@
        <% for(let j=0;j<lectureArray[i].length;j++) {%>
         <% if(lectureArray[i]!=='undefined' && lectureArray[i][0]!=='undefined'){ %>
          
-          <% var del_req ="http://localhost:5000/del/"+ lectureArray[i][j].lecture_id %>
+          <!-- <% var del_req ="http://localhost:5000/dashboard/del/"+ lectureArray[i][j].lecture_id %> -->
           <% var src = "http://localhost:5000/lecture/" + lectureArray[i][j].lecture_id %>
 
         <form method="GET" action="<%= src %>">
@@ -57,10 +57,6 @@
                       </div>
                       <!-- uncomment below line for deleting card using web ui temporarily -->
                       <!-- <a href="<%= del_req %>" class="btn btn-primary">Delete</a>  -->
-                      <% setMail = mail %>
-                            <% if(setMail) { %>
-                            <a href="<%= del_req %>">Delete</a> 
-                              <% } %>
                     </div>
           <!-- </div> -->
         </div>
