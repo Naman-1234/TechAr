@@ -1,3 +1,14 @@
+*,*::before,*::after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
 .colorContainer
 {
   background-color: rgb(4, 52, 141);
@@ -44,7 +55,7 @@
 .container-cards .row
 {
 display: grid;
-grid-template-columns:1fr 1fr 1fr 1fr;
+grid-template-columns:1fr 1fr 1fr;
 grid-template-rows: auto;
 justify-items: center;
 }
@@ -55,3 +66,64 @@ justify-items: center;
   overflow: hidden;
   text-overflow: ellipsis; 
 }
+
+.not_found {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 88vh;
+  width:100%;
+}
+
+.form-control {
+  width: 90%;
+}
+
+.btn-size {
+  width: 90%;
+}
+
+.form-signin {
+  width: 40%;
+}
+/*all lectures*/
+.all-lecture {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.subject__tags {
+  width: 18%;
+  margin-top: 10%;
+}
+
+.tag__head {
+  font-size: 30px;
+}
+.lecture__cards {
+  width: 80%;
+}
+
+.tag {
+  /* width: 10vh; */
+  background-color: blue;
+  display: inline;
+  margin-left: 10px;
+  border-radius: 5px;
+  line-height: 45px;
+  position: relative;
+  padding: 10px 10px 10px 10px ;
+  color: white;
+}
+.tag a{
+  text-decoration: none;
+  color: inherit ;
+}
+
+.align-search {
+  width: 80%;
+  margin-top: 2%;
+  z-index: 9999;
+  position: fixed;
+}
+
