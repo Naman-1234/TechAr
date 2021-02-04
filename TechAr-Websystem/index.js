@@ -345,7 +345,20 @@ app.get("/all-lecture",(req,res)=>{
        res.render('lectures',{lectureArray:arr, length:arr.length,mail: null,checksubject:checksubject})
     }).catch((err)=>console.log("error finding records",err))
   });
+  app.get("/dashboard/generate/add-model",(req,res)=>{
+    res.render("models",{lecture_id: currentLectureId})
+  })
+  app.post("/dashboard/generate/add-model",async (req,res)=>{
+    console.log(req.body);
+    const filter = {lecture_id: req.body.lecture_id}
+    const update = {model: req.body.models_array}
+    console.log(update)
+    var updatedData = await lectureNote.findOneAndUpdate(filter, update, {
+      new: true
+    });
+    console.log(updatedData)
   
+  })
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // basically this route will help us to validate if admin is login in or not 
 app.post('/admin-login', (req, res, next) => {
