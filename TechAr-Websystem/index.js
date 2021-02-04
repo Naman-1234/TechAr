@@ -228,6 +228,7 @@ app.post('/dashboard/generate',async (req, res, next) => {
     });
 });
 
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.get('/admin-panel', (req, res, next) => {
     res.render('admin-login', {auth:true});
@@ -379,6 +380,99 @@ app.get("/dashboard/del/:id",(req,res,next)=>{
     }
   });
 })
+
+//handling query delete request 
+app.get("/dashboard/:id",(req,res)=>{
+  query.remove({query_id:req.params.id}, function(err, result) {
+    if (err) {
+      console.err(err);
+    } else {
+      res.redirect('/dashboard')
+      // redirect to all lecture route when using webui to delete cards fastly
+    }
+  });
+})
+
+//serving lecture page 
+var insdbtmail = '';
+var lecture_id = '';
+var i=0;
+// use ti get lecture using lecture id as it will be passed as params of request
+app.get('/lecture/:id', (req, res, next) => {
+  // i = i+1;
+  // console.log(i)
+  lectureNote
+    .find({ lecture_id: req.params.id })
+    .then((doc) => {
+      console.log(doc)
+      insdbtmail = doc[0].InsEmail;
+      lecture_id = doc[0].lecture_id;
+      var arr = [];
+      arr = doc[0].model;
+      console.log(Object.entries(arr))
+      res.render('lecture', {
+        lecture_title: doc[0].title,
+        lecture_para: doc[0].para.replace(/["]+/g, "'"),
+        note: doc[0].additional_note,
+        src: doc[0].video_link,
+        reso: doc[0].resources,
+        id: doc[0].lecture_id,
+        model_name: doc[0].model,
+        models_length: Object.keys(arr).length
+
+      });
+    })
+    .catch((err) => console.log('error aagayi bhai',err));
+});
+
+//handing doubt request 
+app.post("/query",async (req,res)=>{
+  //insdbtmail : insturctor to whom we send raised dbt
+  var query_id = await makeid(6);
+  
+  var nowDate = new Date(); 
+  var date = nowDate.getFullYear()+'/'+(nowDate.getMonth()+1)+'/'+nowDate.getDate(); 
+  var doubt = `<h3>Student ${req.body.name} asked this doubt</h3><br><p>${req.body.query}</p><br><p>Reply this mail to ${req.body.email}</p>`;
+  let doubt_data = new query({
+    InstructorEmail: insdbtmail,
+    name: req.body.name,
+    query_text: req.body.query,
+    student_mail : req.body.email,
+    date: date,
+    query_id: query_id
+  })
+  var sampleObj  = await doubt_data.save()
+  .then((doc)=>{
+    console.log("doubt saved",doc)
+  })
+  var transporter = mailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 587,
+    secure: false,
+    service: 'gmail',
+    auth: {
+      user: 'techar.service@gmail.com',
+      pass: 'TechAr@9907',
+    },
+  });
+
+ 
+  var mailOptions = {
+    from: 'techar.service@gmail.com',
+    to: insdbtmail,
+    subject: 'Doubt raised for your lecture',
+    html: doubt,
+  };
+
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
+  });
+  res.redirect(`lecture/${lecture_id}`);
+});
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // serving application 
