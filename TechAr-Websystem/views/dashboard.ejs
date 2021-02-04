@@ -42,9 +42,10 @@
   </div>
   </div>
   <div class="d-flex justify-content-between container mt-5">
-    <button type="button" class="btn btn-primary doubt-button btn-lg" data-toggle="modal" data-target="#myModal">See all
-      raised queries</button>
-    <a href="/dashboard/generate" class="btn btn-primary btn-lg mr-5">Proceed to create lecture</a>
+    <button type="button" class="btn btn-primary doubt-button btn-lg" data-toggle="modal" data-target="#myModal">
+      <i class="fa fa-question-circle" aria-hidden="true"></i>
+      See all raised queries</button>
+    <a href="/dashboard/generate" class="btn btn-primary btn-lg mr-5">Proceed to create lecture<i class="fas fa-arrow-right"></i></a>
   </div>
 
   <div class="container mt-5">
@@ -52,7 +53,7 @@
     <div class="row">
       <% for(var i=0;i<length;i++) {%>
 
-        <% var src="http://localhost:3000/lecture/" + doc[i].lecture_id %>
+        <% var src="http://localhost:5000/lecture/" + doc[i].lecture_id %>
         <!-- below route are pending to be formed -->
           <!-- <% var del_req="http://localhost:3000/dashboard/del/" +doc[i].lecture_id %> -->
             <!-- <% var edit="http://localhost:3000/dashboard/edit/" +doc[i].lecture_id %> -->
