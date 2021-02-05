@@ -66,7 +66,7 @@
   font-size: 20px;
 }
 </style>
-<% var model__array = ['he','yo','ko','ok','hffdfdfo','fdfdo','hdffdo','hfdfdfo','hdfdfo','hfdffo'] %>
+<% var model__array = ['linear','four','bent','pyramid'] %>
 <div class="page__holder">
     <div class="model__container">
     <div class="search__input">
@@ -153,7 +153,13 @@
         lecture_id: '<%- lecture_id %>'
       })
     );
-    alert("you lecture formed successfully you will be redirected to dashboard shortly ");
+    // alert("you lecture formed successfully you will be redirected to dashboard shortly ");
+    swal({
+      title: "Good job!",
+      text: "Lecture added successfully",
+      icon: "success",
+      button: "Thanks",
+    });
     setTimeout(function redirect(){
       window.location.href="/dashboard"
     },1000)

@@ -154,6 +154,22 @@
      if(sure==true) {
        calltoupdate();
      }
+     swal({
+      title: "Are you sure?",
+      text: "You want to save the updated changes ",
+      icon: "warning",
+      buttons: [
+        'No, cancel it!',
+        'Yes, I am sure!'
+      ],
+      dangerMode: true,
+    }).then(function(isConfirm) {
+      if (isConfirm) {
+       calltoupdate();
+      } else {
+        swal("Cancelled", "Nothing updated :)", "error");
+      }
+    })
     }
       
 </script>
