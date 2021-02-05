@@ -8,7 +8,7 @@
     display: flex;
     flex-direction: row;
     /* align-items: center; */
-    justify-content: center;
+    /* justify-content: center; */
 }
 .model__container {
     width: 78%;
@@ -36,6 +36,8 @@
     width: 22%;
     height: 100%;
     height: 100vh;
+    position: fixed;
+    left: 78%;
 }
 
 .tag__head {
@@ -151,6 +153,9 @@
         lecture_id: '<%- lecture_id %>'
       })
     );
-    window.location.href="/success"
+    alert("you lecture formed successfully you will be redirected to dashboard shortly ");
+    setTimeout(function redirect(){
+      window.location.href="/dashboard"
+    },1000)
   }
 </script>

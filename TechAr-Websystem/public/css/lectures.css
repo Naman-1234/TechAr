@@ -13,6 +13,9 @@ body {
 {
   background-color: rgb(4, 52, 141);
 }
+.extra__margin {
+  margin-top: 5%;
+}
 .heading{
   /* background-color: rgb(3, 109, 151); */
   height: 20vh;
@@ -90,11 +93,13 @@ justify-items: center;
 .all-lecture {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  /* justify-content: center; */
 }
 .subject__tags {
   width: 18%;
-  margin-top: 10%;
+  margin-top: 13%;
+  position: fixed;
+  left: 81.5%;
 }
 
 .tag__head {
@@ -102,6 +107,7 @@ justify-items: center;
 }
 .lecture__cards {
   width: 80%;
+  margin-left: 1%;
 }
 
 .tag {

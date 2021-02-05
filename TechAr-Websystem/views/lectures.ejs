@@ -6,11 +6,14 @@
 <div class="all-lecture">
 
 <div class="lecture__cards">
-<!-- <h1 class="display-1 text-capitalize text-center">All of your articles</h1> -->
 <div class=" colorContainer" id="all_articles">
 <% for(i=0;i<length-1;i++) {%>
     <div class="heading text-center">
-      <h1 class="text-capitalize " id="<%= lectureArray[i][0].subject_name %>"> <%= lectureArray[i][0].subject_name %></h1>
+      <% if(i==0){ %> 
+      <h1 class="text-capitalize extra__margin" id="<%= lectureArray[i][0].subject_name %>"> <%= lectureArray[i][0].subject_name %></h1>
+      <% }else{ %>
+        <h1 class="text-capitalize " id="<%= lectureArray[i][0].subject_name %>"> <%= lectureArray[i][0].subject_name %></h1>
+      <%} %>
      </div> 
      <% var value="" %>
      <% value=checksubject(lectureArray[i][0].subject_name) %>

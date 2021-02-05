@@ -53,7 +53,7 @@
       name="repsw"
       required
     />
-    <button type="submit" class="btn btn-primary mt-3">Add Instructor</button>
+    <button type="submit" class="btn btn-primary mt-3" onclick="completionMessage()">Add Instructor</button>
   </form>
   <div id="message">
     <h3 class="pass__head">Password must contain the following:</h3>
@@ -122,5 +122,10 @@ myInput.onkeyup = function() {
     length.classList.add("invalid");
   }
 }
+
+function completionMessage(){
+  alert("Instructor added successfully");
+}
+
 </script>
 <!-- <%- include('./Partials/footer.ejs') -%> -->
