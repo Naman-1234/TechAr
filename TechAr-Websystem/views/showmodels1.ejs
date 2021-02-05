@@ -29,23 +29,32 @@
 		<script src = "/loaders/GLTFLoader.js"></script>
 		<script src = "/loaders/OBJLoader.js"></script>
 		<script src = "/loaders/STLLoader.js"></script>
+    
 		<script src = "/loaders/ColladaLoader.js"></script>
+    <script src="/scripts/scene.js"></script>
+<script src="/scripts/load.js"></script>
+<script src="/scripts/utils.js"></script>
+<script src="/scripts/gui.js"></script>
+
     <!-- <script src="/js/showModels.js"></script> -->
     <script>
       
-function main() {
+//function main() {
   const canvas = document.querySelector('#c');
   const renderer = new THREE.WebGLRenderer({canvas});
-
+  let currentmodel;
+  var root; 
   const fov = 45;
   const aspect = 2;  // the canvas default
-  const near = 0.1;
-  const far = 100;
+  const near = 0.01;
+  const far = 1000;
   const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
-  camera.position.set(0, 10, 20);
+  camera.position.set(0, 2, 3);
 
   const controls = new THREE.OrbitControls(camera, canvas);
-  controls.target.set(0, 5, 0);
+
+  //* Changed Position from 0,5,0 to 0,0,0
+  controls.target.set(0, 0, 0);
   controls.update();
 
   const scene = new THREE.Scene();
@@ -77,6 +86,9 @@ function main() {
     const groundColor = 0xB97A20;  // brownish orange
     const intensity = 1;
     const light = new THREE.HemisphereLight(skyColor, groundColor, intensity);
+    //const light = new THREE.DirectionalLight( 0xFFFFFF );
+    //const helper = new THREE.DirectionalLightHelper( light, 5 );
+    //scene.add( helper );
     scene.add(light);
   }
 
@@ -120,11 +132,12 @@ function main() {
     //const Modelname='<%-JSON.stringify(name || null)%>';
     const Modelname='<%-name%>'
     console.log(Modelname)
-    alert(Modelname)
     const url=`/assets/models/glb/${Modelname}`
     gltfLoader.load(url, (gltf) => {
       
-      const root = gltf.scene;
+      root = gltf.scene;
+      console.log("Root is",root)
+      
       scene.add(root);
 
       // compute the box that contains all the stuff
@@ -166,10 +179,11 @@ function main() {
 
     requestAnimationFrame(render);
   }
-
+  console.log(root);
+  addGUI(root)
   requestAnimationFrame(render);
-}
+//}
 
-main();
+//main();
     </script>
 </html>
