@@ -69,17 +69,17 @@
     <div class="model__container">
     <div class="search__input">
         <label for="search" class="search__label">Search</label>
-        <input type="text" placeholder="enter model name " class="form-group"></input>
+        <input type="text" placeholder="enter model name " class="form-group" id="search_bar" onkeyup="search()"></input>
     </div>
     <!-- https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4Zeehq1KG2a0ZVemWuvlxXQi1gbT3Jzi6pg&usqp=CAU -->
-    <div class="container mt-5 text-center">
+    <div class="container mt-5 text-center container-cards">
         <!-- <h1 class="text-center"> <%= model.length %> </h1> -->
         <button class="btn btn-primary" onclick="modelsDispatch()">Add all selected models </button>
-        <div class="row">
+        <div class="row ">
       <% for(var i=0;i<model.length;i++) {%>
 
                        <div class="col-md-4">
-                       <div class="card stylecard mt-3">
+                       <div class="card stylecard mt-3 mycard">
       
                         <div class="view overlay">
                           <!-- <a class="btn btn-rounded btn-md btn-primary edit__btn btn-circle btn-sm" >E</a>  -->
@@ -93,9 +93,9 @@
                         <div class="card-body">
                       
                           <!-- Title -->
-                          <h3 class="card-title text-center text-capitalize"><%= model[i].model__name %></h4>
+                          <h3 class="card-title text-center text-capitalize cardtitle"><%= model[i].model__name %></h4>
                           <hr>
-                          <!-- Text -->
+                          < !-- Text -->
                           <p class="card-text set-width">Press Button below to add it in your lecture and see the change of education in future</p>
                           <div class="text-center">
                           
@@ -161,5 +161,33 @@
     setTimeout(function redirect(){
       window.location.href="/dashboard"
     },1000)
+  }
+  async function search()
+  {
+var input=document.getElementById("search_bar")
+var filter=input.value.toUpperCase()
+var main=document.getElementsByClassName('container-cards')
+console.log(main)
+console.log(main.length)
+for(i=0;i<main.length;i++)
+{
+  var cards=main[i].getElementsByClassName('mycard')
+  console.log('Card is ',cards)
+  for(k=0;k<cards.length;k++)
+  {
+    singlecard=cards[k]
+    console.log('kth card is',singlecard)
+    var title=singlecard.getElementsByClassName('cardtitle')[0]
+    console.log('Title is ',title)
+    var txtvalue=title.textcontent||title.innerText
+    console.log(txtvalue)
+    if (txtvalue.toUpperCase().indexOf(filter) > -1) {
+      singlecard.style.display = "";
+  } else {
+    singlecard.style.display = "none";
+  }
+  }
+  
+}
   }
 </script>
