@@ -7,6 +7,7 @@ const lectureNote = require('./models/LectureDetails');
 const app = express();
 const instructorModel = require('./models/InstructorDetails');
 const bcrypt = require('bcrypt');
+const multer=require('multer');
 const query  = require("./models/query");
 const request = require('request');
 var isInstructorAuthenticated = false;
@@ -21,7 +22,19 @@ app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname + '/../public')));
 app.use(express.static('public'));
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+var storage=multer.diskStorage({
+  destination:(req,file,cb)=>{
+    cb(null,__dirname+'/public/assets/models/glb')
+  },
+  filename:(req,file,cb)=>{
+    cb(null,file.originalname)
+  }
+});
+var upload=multer({
+  storage:storage
+});
+
+
 // connecting out map with mongodb atlas 
 mongoose
   .connect('mongodb+srv://creator:nnNN@@22@cluster0.bkrcv.mongodb.net/Images', {
@@ -34,7 +47,9 @@ mongoose
   .catch((err) => {
     console.log('not connected');
   });
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
 // this function help us to make a random string of n length
 function makeid(length) {
   var result = '';
@@ -159,8 +174,8 @@ app.get("/dashboard/generate",(req,res)=>{
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // this will lecture forming request
 // fortestin purpose you can use below lecture id 
-// var currentLectureId = "c1QacE";
-var currentLectureId = "";
+var currentLectureId = "c1QacE";
+// var currentLectureId = "";
 app.post('/dashboard/generate',async (req, res, next) => {
 
   console.log("printing request body",req.body);
@@ -548,6 +563,23 @@ app.get("/:id",(req,res)=>{
   res.render('notfound',{});
 })
 
+app.get("/customodel/:id",(req,res)=>{
+  console.log("sahi call hua ",req.params.id)
+  if(req.params.id!="null")
+  res.render('showmodel',{name:req.params.id,is_custom_model:"custom_model"});
+  else
+  res.render('notfound',{});
+})
+app.get("/a/b/c/uploadmodel",(req,res)=>{
+  res.render('upload_model',{})
+}
+);
+app.post("/a/b/c/d/test",upload.single('modelTesting'),(req,res,next)=>{
+res.render('showmodels1',
+{
+  name:req.file.originalname
+})
+})
 // serving application 
 app.listen(port, () => {
     console.log('Server Started at ' + port);
