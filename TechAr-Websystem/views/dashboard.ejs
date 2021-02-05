@@ -4,27 +4,27 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-head  er">
-          <h2 class="text-center">Your query checklist</h2>
+          <h2 class="text-center display-6 mt-3">Your query checklist</h2>
         </div> 
         <div class="modal-body">
           <% if(queries_length!=0){ %>
-            <div class="query__list">
+            <div class="container">
               <% for(var j=0;j<queries_length;j++) { %>
-                <div class="query__card">
-                  <div class="query__header">
-                    <h4 class="student__name">
+                <div class="card  mb-3">
+                  <div class="card-header text-center">
+                    <h4 class="text-capitalize text-dark">
                       <%= queries[j].name %>
                     </h4>
                     <p class="query__date">
                       <%= queries[j].date %>
                     </p>
                   </div>
-                  <div class="query__content">
+                  <div class="card-body">
                     <p>
                       <%= queries[j].query_text %>
                     </p>
                   </div>
-                  <div class="query__footer">
+                  <div class="card-footer text-center">
                     <h4 class="student__mail"">Reply to: <%= queries[j].student_mail %></h4>
                     <% var delete_query = " /dashboard/" + queries[j].query_id %>
                       <p><a href="<%= delete_query %>" class="close__link">Mark as resolved</a> </p>
@@ -35,7 +35,7 @@
             <% } else {%>
               <h1 class="text-center">No query raised &#128516; </h1>
               <% } %>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default btn-block" data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
