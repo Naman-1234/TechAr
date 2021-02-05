@@ -224,6 +224,20 @@ app.post('/dashboard/generate',async (req, res, next) => {
       console.log('error occur', err);
     });
 });
+app.get("/:id",(req,res)=>{
+  if(req.params.id!="null")
+  res.render('index',{name:req.params.id,is_custom_model:"simple_model"});
+  else
+  res.render('notfound',{});
+})
+
+app.get("/customodel/:id",(req,res)=>{
+  console.log("sahi call hua ",req.params.id)
+  if(req.params.id!="null")
+  res.render('index',{name:req.params.id,is_custom_model:"custom_model"});
+  else
+  res.render('notfound',{});
+})
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.get('/admin-panel', (req, res, next) => {

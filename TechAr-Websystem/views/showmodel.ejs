@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>3D Models Load</title>
+		<meta charset = "utf-8">
+		<meta name = "viewport" content = "width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<style>
+			body {
+				position: absolute; top : 0px; left : 0px; margin: 0; padding : 0; border: 0; overflow: hidden; width: 100%; height: 100%; background-color: black;
+			}
+		</style>
+	</head>
+	<body>
+		<script src = "libs/three.min.js"></script>
+		<script src = "libs/OrbitControls.js"></script>
+		<script src = "libs/inflate.min.js"></script>
+		<script src = "libs/dat.gui.min.js"></script>
+		<script src = "loaders/FBXLoader.js"></script>
+		<script src = "loaders/GLTFLoader.js"></script>
+		<script src = "loaders/OBJLoader.js"></script>
+		<script src = "loaders/STLLoader.js"></script>
+		<script src = "loaders/ColladaLoader.js"></script>
+		<script src = "scripts/scene.js"></script>
+		<script src = "scripts/showroom.js"></script>
+		<script src = "scripts/load.js"></script>
+		<script src = "scripts/utils.js"></script>
+		<script src = "scripts/gui.js"></script>
+		<script>
+			let Scene, Showroom, Load, currentModel, object, rotateOn = false;
+const reader = new FileReader();
+
+function letsPlay() {
+	init();
+	animate();
+}
+
+async function init() {
+	let container = document.createElement('div');
+	document.body.appendChild(container);
+	window.addEventListener('resize', onWindowResize, false);
+
+	Scene = new SceneInit();
+	Showroom = new ShowroomInit();
+	Load = new LoadInit();
+	Scene.createScene();
+	Scene.createRenderer();
+
+	container.appendChild(Scene.renderer.domElement);
+
+	Scene.createControls();
+	let modelType = '<%- is_custom_model %>'
+	var src="";
+	if(modelType === "custom_model") {
+		src = src + "assets/models/fbx/" + '<%- name %>' + ".fbx"
+	}else {
+		src = src + "assets/models/gltf/" + '<%- name %>' + ".glb"
+	}
+	//  if(<% is_custom_model %>) { 
+	// let src = 'uploads/'
+	// }
+		// let model_name = '<%-name%>'+".glb";
+	// let src = 'assets/models/gltf/'+model_name;
+	// let src= 'assets/models/gltf/Skull.gltf';
+	console.log(src);
+
+	await Load.loadSample(src);
+	// await Load.loadSample("");
+
+	addGUI(currentModel);
+}
+
+function onWindowResize() {
+	Scene.camera.aspect = window.innerWidth / window.innerHeight;
+	Scene.camera.updateProjectionMatrix();
+	Scene.renderer.setSize(window.innerWidth, window.innerHeight);
+}
+
+function animate() {
+	requestAnimationFrame(animate);
+	Scene.renderer.render(Scene.scene, Scene.camera);
+	rotateModel();
+}
+
+letsPlay();
+
+		</script>
+		<!-- //trying a rude way
+
+	</body>
+</html>
