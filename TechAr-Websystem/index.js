@@ -499,6 +499,7 @@ app.post("/dashboard/generate/add-model",async (req,res)=>{
     new: true
   });
   console.log(updatedData)
+});
 
 //below routes handle updating lecture feature
 app.get("/dashboard/edit/:id",(req,res,next)=>{
