@@ -127,7 +127,12 @@
     quillDelta = quillDelta.innerHTML;                  
     var arr = quill.getContents();
     if(Insemail==="" ||ltitle==="" || subject_name===""|| quill.root.innerHTML===""){
-      alert("please fill all marked fields ");
+      swal({
+        title: "Ohh no !!",
+        text: "Please fill all field",
+        icon: "error",
+        button: "ok",
+      });
     }
     else {
   var xhr = new XMLHttpRequest();

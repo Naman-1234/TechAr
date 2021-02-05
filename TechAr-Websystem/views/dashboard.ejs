@@ -49,6 +49,9 @@
   </div>
 
   <div class="container mt-5">
+    <% if(length===0) {%>
+      <h1 class="text-center"> Please create some lecture </h1>  
+      <% }else{ %>
     <h1 class="text-center"> All lecture add by you </h1>
     <div class="row">
       <% for(var i=0;i<length;i++) {%>
@@ -102,6 +105,7 @@
               </div>
               <% } %>
     </div>
+  <%}%>
   </div>
   <script>
   function deleteHandler(url) {

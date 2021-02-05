@@ -159,8 +159,8 @@ app.get("/dashboard/generate",(req,res)=>{
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // this will lecture forming request
 // fortestin purpose you can use below lecture id 
-// var currentLectureId = "c1QacE";
-var currentLectureId = "";
+var currentLectureId = "dNOJPz";
+// var currentLectureId = "";
 app.post('/dashboard/generate',async (req, res, next) => {
 
   console.log("printing request body",req.body);
