@@ -543,7 +543,7 @@ app.get("/customodel/:id",(req,res)=>{
   res.render('notfound',{});
 })
 app.get("/a/b/c/d/test",(req,res)=>{
-res.render('showmodel',{})
+res.render('showmodels1',{})
 })
 // serving application 
 app.listen(port, () => {
