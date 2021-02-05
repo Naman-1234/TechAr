@@ -224,20 +224,7 @@ app.post('/dashboard/generate',async (req, res, next) => {
       console.log('error occur', err);
     });
 });
-app.get("/:id",(req,res)=>{
-  if(req.params.id!="null")
-  res.render('index',{name:req.params.id,is_custom_model:"simple_model"});
-  else
-  res.render('notfound',{});
-})
 
-app.get("/customodel/:id",(req,res)=>{
-  console.log("sahi call hua ",req.params.id)
-  if(req.params.id!="null")
-  res.render('index',{name:req.params.id,is_custom_model:"custom_model"});
-  else
-  res.render('notfound',{});
-})
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.get('/admin-panel', (req, res, next) => {
@@ -540,7 +527,21 @@ app.post("/edit/:id",async (req,res,next)=>{
   });
   console.log("ye updated data hai",updatedData);
 })
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Adding in last ,so that it runs if we don't have given that path or some other file
+app.get("/:id",(req,res)=>{
+  if(req.params.id!="null")
+  res.render('showmodel',{name:req.params.id,is_custom_model:"simple_model"});
+  else
+  res.render('notfound',{});
+})
+
+app.get("/customodel/:id",(req,res)=>{
+  console.log("sahi call hua ",req.params.id)
+  if(req.params.id!="null")
+  res.render('showmodel',{name:req.params.id,is_custom_model:"custom_model"});
+  else
+  res.render('notfound',{});
+})
 // serving application 
 app.listen(port, () => {
     console.log('Server Started at ' + port);
