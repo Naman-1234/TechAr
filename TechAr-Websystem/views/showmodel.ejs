@@ -50,23 +50,7 @@ async function init() {
 	container.appendChild(Scene.renderer.domElement);
 
 	Scene.createControls();
-	//let modelType = '<%- is_custom_model %>'
-	//var src="";
-	/*if(modelType === "custom_model") {
-		src = src + "assets/models/fbx/" + '<%- name %>' + ".fbx"
-	}else {
-		src = src + "assets/models/gltf/" + '<%- name %>' + ".glb"
-	}*/
-	//  if(<% is_custom_model %>) { 
-	// let src = 'uploads/'
-	// }
-		// let model_name = '<%-name%>'+".glb";
-	// let src = 'assets/models/gltf/'+model_name;
-	// let src= 'assets/models/gltf/Skull.gltf';
-	//console.log(src);
-
-	//await Load.loadSample(src);
-	// await Load.loadSample("");
+	
     gltfLoader.Load(url,(gltf)=>{
         const root=gtlf.scene;
         scene.add(root)
