@@ -8,6 +8,7 @@ const app = express();
 const instructorModel = require('./models/InstructorDetails');
 const bcrypt = require('bcrypt');
 const query  = require("./models/query");
+const request = require('request');
 var isInstructorAuthenticated = false;
 var InstructorMail = '';
 var mailer = require('nodemailer');
@@ -157,6 +158,9 @@ app.get("/dashboard/generate",(req,res)=>{
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // this will lecture forming request
+// fortestin purpose you can use below lecture id 
+// var currentLectureId = "c1QacE";
+var currentLectureId = "";
 app.post('/dashboard/generate',async (req, res, next) => {
 
   console.log("printing request body",req.body);
@@ -342,8 +346,17 @@ app.get("/all-lecture",(req,res)=>{
        res.render('lectures',{lectureArray:arr, length:arr.length,mail: null,checksubject:checksubject})
     }).catch((err)=>console.log("error finding records",err))
   });
-  app.get("/dashboard/generate/add-model",(req,res)=>{
-    res.render("models",{lecture_id: currentLectureId})
+  app.get("/dashboard/generate/add-model",async (req,resp)=>{
+    var model__array = [];
+      await request('https://console.echoar.xyz/query?key=holy-dust-4782', { json: true }, (err, res, body) => {
+      if (err) { return console.log(err); }
+      var id = Object.values(body.db)
+      console.log(id.length)
+      id.map((data)=>{ model__array.push({model__url: data.additionalData.shortURL, model__name:data.hologram.filename.split('.').slice(0, -1).join('.')})})
+      model__array.map((data)=>console.log(data))
+      resp.render("models",{lecture_id: currentLectureId, model:model__array})
+    });
+    console.log(model__array)
   })
   app.post("/dashboard/generate/add-model",async (req,res)=>{
     console.log(req.body);
