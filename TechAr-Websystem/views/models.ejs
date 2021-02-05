@@ -66,7 +66,6 @@
   font-size: 20px;
 }
 </style>
-<% var model__array = ['linear','four','bent','pyramid'] %>
 <div class="page__holder">
     <div class="model__container">
     <div class="search__input">
@@ -75,10 +74,10 @@
     </div>
     <!-- https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4Zeehq1KG2a0ZVemWuvlxXQi1gbT3Jzi6pg&usqp=CAU -->
     <div class="container mt-5 text-center">
-        <!-- <h1 class="text-center"> All availaible models  </h1> -->
+        <!-- <h1 class="text-center"> <%= model.length %> </h1> -->
         <button class="btn btn-primary" onclick="modelsDispatch()">Add all selected models </button>
         <div class="row">
-      <% for(var i=0;i<model__array.length;i++) {%>
+      <% for(var i=0;i<model.length;i++) {%>
 
                        <div class="col-md-4">
                        <div class="card stylecard mt-3">
@@ -95,7 +94,7 @@
                         <div class="card-body">
                       
                           <!-- Title -->
-                          <h3 class="card-title text-center text-capitalize">Atom Model</h4>
+                          <h3 class="card-title text-center text-capitalize"><%= model[i].model__name %></h4>
                           <hr>
                           <!-- Text -->
                           <p class="card-text set-width">Press Button below to add it in your lecture and see the change of education in future</p>
@@ -103,10 +102,10 @@
                           
                           <div class="row">                  
                               <div class="col-sm">
-                              <a class="btn  btn-rounded btn-md btn-primary text-center" id="<%= model__array[i] %>" onclick="addModels('<%= model__array[i] %>')">Add to lecture</a>
+                              <a class="btn  btn-rounded btn-md btn-primary text-center" id="<%= model[i].model__name %>" onclick="addModels('<%= model[i].model__name %>')">Add to lecture</a>
                               </div>
                               </div class="col-sm">
-                              <a class="btn  btn-rounded btn-md btn-primary text-center" href="https://go.echoar.xyz/eevo">view </a>
+                              <a class="btn  btn-rounded btn-md btn-primary text-center" href="<%= model[i].model__url %>">view </a>
       
                             </div>
                         </div>
@@ -119,10 +118,10 @@
     </div>
     <div class="tag__section">
         <h1 class="text-center tag__head" > Search by tags</h1>
-      <% for(var i=0;i<model__array.length;i++) {%>
+      <% for(var i=0;i<model.length;i++) {%>
         <div class="tag">
-          <% link = "#" + model__array[i] %>
-          <a href="<%= link %>"><%= model__array[i] %></a> 
+          <% link = "#" + model[i].model__name %>
+          <a href="<%= link %>"><%= model[i].model__name %></a> 
         </div>
       <% }%>
 
