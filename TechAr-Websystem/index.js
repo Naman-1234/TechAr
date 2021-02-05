@@ -161,6 +161,7 @@ app.post('/dashboard/generate',async (req, res, next) => {
 
   console.log("printing request body",req.body);
   var id = await makeid(6);
+  currentLectureId = id;
   let Mail = req.body.Insemail;
   let lectureid = id;
   let lecture_title = req.body.ltitle;
@@ -182,7 +183,7 @@ app.post('/dashboard/generate',async (req, res, next) => {
     video_link: lecture_video_link,
     resources: lecture_reso,
     subject_name: lecture_subject,
-    model: model_name,
+    // model: model_name,
     quillDelta: quillDelta
     // customModelName: customModelName
   });
@@ -218,16 +219,11 @@ app.post('/dashboard/generate',async (req, res, next) => {
           console.log('Email sent: ' + info.response);
         }
       });
-      // res.render('Success', {});
-      console.log("occur")
-      // res.redirect("/success")
-      res.render('Generator',{action:"done"})
     })
     .catch((err) => {
       console.log('error occur', err);
     });
 });
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.get('/admin-panel', (req, res, next) => {
@@ -485,6 +481,20 @@ app.post("/query",async (req,res)=>{
     }
   });
   res.redirect(`lecture/${lecture_id}`);
+});
+//* Adding Route for Models Adding
+app.get("/dashboard/generate/add-model",(req,res)=>{
+  res.render("models",{lecture_id: currentLectureId})
+})
+app.post("/dashboard/generate/add-model",async (req,res)=>{
+  console.log(req.body);
+  const filter = {lecture_id: req.body.lecture_id}
+  const update = {model: req.body.models_array}
+  console.log(update)
+  var updatedData = await lectureNote.findOneAndUpdate(filter, update, {
+    new: true
+  });
+  console.log(updatedData)
 });
 
 //below routes handle updating lecture feature
