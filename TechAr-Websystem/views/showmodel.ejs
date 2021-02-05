@@ -50,6 +50,18 @@ async function init() {
 	container.appendChild(Scene.renderer.domElement);
 
 	Scene.createControls();
+
+	// let model_name = '<%-name%>'+".fbx";
+	// let src = 'assets/models/fbx/'+model_name;
+	//r src=""
+	//c = src + "assets/models/obj/" + 'sam' + ".obj"
+
+	//nsole.log(src);
+
+	//ait Load.loadSample(src);
+	// await Load.loadSample("");
+
+
 	
     gltfLoader.Load(url,(gltf)=>{
         const root=gtlf.scene;

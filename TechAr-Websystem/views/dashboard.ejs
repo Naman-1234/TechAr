@@ -105,14 +105,26 @@
   </div>
   <script>
   function deleteHandler(url) {
-    var sure = confirm("do you really want to delete it")
-    console.log(sure)
-    if(sure===true){
-    const Http = new XMLHttpRequest();
-    console.log("yes")
-    Http.open("GET", url);
-    Http.send();
-    window.location.reload();
+    swal({
+      title: "Are you sure?",
+      text: "You won't be able to recover it back think twice :( !",
+      icon: "warning",
+      buttons: [
+        'No, cancel it!',
+        'Yes, I am sure!'
+      ],
+      dangerMode: true,
+    }).then(function(isConfirm) {
+      if (isConfirm) {
+        const Http = new XMLHttpRequest();
+          console.log("yes")
+          Http.open("GET", url);
+          Http.send();
+          window.location.reload();
+
+      } else {
+        swal("Cancelled", "fewwwwwwww safe :)", "error");
+      }
+    })
     }
-  }
 </script>

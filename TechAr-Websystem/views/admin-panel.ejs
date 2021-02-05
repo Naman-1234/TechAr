@@ -16,6 +16,7 @@
       class="form-control"
       placeholder="first name"
       name="fname"
+      id="fname"
       required
     />
     <label class="mt-2">Last Name</label>
@@ -24,6 +25,7 @@
       class="form-control"
       placeholder="lastname"
       name="lname"
+      id="lname"
       required
     />
     <label class="mt-2">instructor mail</label>
@@ -32,6 +34,7 @@
       class="form-control"
       placeholder="enter email"
       name="usremail"
+      id="usremail"
       required
     />
     <label class="mt-2">Create Password</label>
@@ -51,6 +54,7 @@
       class="form-control"
       placeholder="Re enter password"
       name="repsw"
+      id="repsw"
       required
     />
     <button type="submit" class="btn btn-primary mt-3" onclick="completionMessage()">Add Instructor</button>
@@ -124,7 +128,30 @@ myInput.onkeyup = function() {
 }
 
 function completionMessage(){
-  alert("Instructor added successfully");
+  // swal("Instructor added successfully");
+  let fname  = document.getElementById('fname')
+  fname = fname.value;
+  let lname =  document.getElementById('lname')
+  lname = lname.value;
+  let usremail = document.getElementById('usremail')
+  usremail = usremail.value
+  let psw = document.getElementById('psw')
+  psw = psw.value
+  if(fname===""||lname===""||usremail===""||psw==="") {
+    swal({
+  title: "Ohh no !!",
+  text: "Please fill all field",
+  icon: "error",
+  button: "ok",
+});
+  }
+  else {
+  swal({
+  title: "Good job!",
+  text: "Instructor added successfully",
+  icon: "success",
+  button: "Yes",
+}); }
 }
 
 </script>
