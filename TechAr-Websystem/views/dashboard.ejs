@@ -88,8 +88,7 @@
                             <% setMail=mail %>
                               <% if(setMail) { %>
                                 <div class="col-sm">
-                                  <a class="btn  btn-rounded btn-md btn-primary text-center"
-                                    href="<%= del_req %>">Delete</a>
+                                  <a class="btn  btn-rounded btn-md btn-primary text-center" onclick="deleteHandler('<%= del_req %>')" >Delete</a> 
                                   <% } %>
                                 </div>
                           </div class="col-sm">
@@ -104,3 +103,16 @@
               <% } %>
     </div>
   </div>
+  <script>
+  function deleteHandler(url) {
+    var sure = confirm("do you really want to delete it")
+    console.log(sure)
+    if(sure===true){
+    const Http = new XMLHttpRequest();
+    console.log("yes")
+    Http.open("GET", url);
+    Http.send();
+    window.location.reload();
+    }
+  }
+</script>

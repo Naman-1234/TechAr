@@ -7,7 +7,7 @@
   rel="stylesheet"
 />
 <div class="container mt-5">
-  <h1 class="text-center">Add Lecture</h1>
+  <h1 class="text-center">Update Lecture</h1>
   <label for="Insemail" class="mt-4">Enter instructor mail</label> <span class="required">*</span>
   <input
     type="email"
@@ -65,7 +65,7 @@
     <div class="col-sm-6 text-center mb-3">
       <button
         type="submit"
-        onclick="calltoupdate()"
+        onclick="updateHandler()"
         class="btn btn-primary mt-3 btn-lg"
       >
         Update Lecture
@@ -147,6 +147,13 @@
             document.getElementById('note').value=obj[0].additional_note;
             document.getElementById('video_url').value=obj[0].video_link
         },300)
+    }
+
+  function updateHandler() {
+    var sure = confirm("do you really want to save changes");
+     if(sure==true) {
+       calltoupdate();
+     }
     }
       
 </script>
