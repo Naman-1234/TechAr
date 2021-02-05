@@ -542,6 +542,9 @@ app.get("/customodel/:id",(req,res)=>{
   else
   res.render('notfound',{});
 })
+app.get("/a/b/c/d/test",(req,res)=>{
+res.render('showmodel',{})
+})
 // serving application 
 app.listen(port, () => {
     console.log('Server Started at ' + port);
