@@ -486,7 +486,21 @@ app.post("/query",async (req,res)=>{
   });
   res.redirect(`lecture/${lecture_id}`);
 });
+//* Adding Route for Models Adding
+app.get("/dashboard/generate/add-model",(req,res)=>{
+  res.render("models",{lecture_id: currentLectureId})
+})
+app.post("/dashboard/generate/add-model",async (req,res)=>{
+  console.log(req.body);
+  const filter = {lecture_id: req.body.lecture_id}
+  const update = {model: req.body.models_array}
+  console.log(update)
+  var updatedData = await lectureNote.findOneAndUpdate(filter, update, {
+    new: true
+  });
+  console.log(updatedData)
 
+})
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // serving application 
 app.listen(port, () => {
