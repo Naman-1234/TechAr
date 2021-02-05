@@ -50,6 +50,11 @@ We had concurrently started the working on phase 1 and phase 2 due to limited am
    - Leture page [T]
    - Lectures Page [T]
    - Admin panel [C]
+   - Edit lecture [T]
+   - Models viewer [O]
+   - Models Selection [O]
+   - Asking Query [C]
+   - Email Setup [C]
 
 <b>Note</b> : this page will be regularly updated to track the development flow.
 ### Legend
