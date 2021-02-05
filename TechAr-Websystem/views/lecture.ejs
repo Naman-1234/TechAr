@@ -150,7 +150,16 @@
 </div>
 <div class="text-center template-footer">
 <button type="button" class="btn btn-primary btn-lg doubt-button" data-toggle="modal" data-target="#myModal">Ask your doubt here</button>
-<a class="btn btn-lg btn-primary" href="https://go.echoar.xyz/wT9J">Experience it</a> 
+<% for(j=0;j<model_name.length;j++){ %>
+  <% var temp = model_name[j] %>
+  <% var ch = temp.substring(0,4) %>
+  <% if(ch==="http"){%>
+    <a class="btn btn-lg btn-primary" href="<%= model_name[j] %>" target="_blank"><%= model_name[j] %></a>
+  <%} else {%>
+    <% route = "/model/" + model_name[j] %>
+    <a class="btn btn-lg btn-primary" href="<%= route %>"><%= model_name[j] %></a>
+  <%}%>
+<% }%> 
 </div>
 <script>
   window.onload = function () {

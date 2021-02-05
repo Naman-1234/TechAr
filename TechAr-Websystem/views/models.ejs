@@ -37,6 +37,8 @@
     left: 78%;
     height: 100vh;
     border-left:solid black 2px ;
+    display: flex;
+    flex-direction: column;
 }
 
 .tag__head {
@@ -64,6 +66,9 @@
 .search__input input {
   font-size: 20px;
 }
+.all-tags {
+  height: 500px;
+}
 </style>
 <div class="page__holder">
     <div class="model__container">
@@ -73,8 +78,10 @@
     </div>
     <!-- https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4Zeehq1KG2a0ZVemWuvlxXQi1gbT3Jzi6pg&usqp=CAU -->
     <div class="container mt-5 text-center">
-        <!-- <h1 class="text-center"> <%= model.length %> </h1> -->
+        <h1 class="text-center"> <%= three__models.length %> </h1>
         <button class="btn btn-primary" onclick="modelsDispatch()">Add all selected models </button>
+        <h1 class="text-center"> Select Among echoar models  </h1>
+
         <div class="row">
       <% for(var i=0;i<model.length;i++) {%>
 
@@ -101,7 +108,7 @@
                           
                           <div class="row">                  
                               <div class="col-sm">
-                              <a class="btn  btn-rounded btn-md btn-primary text-center" id="<%= model[i].model__name %>" onclick="addModels('<%= model[i].model__name %>')">Add to lecture</a>
+                              <a class="btn  btn-rounded btn-md btn-primary text-center" id="<%= model[i].model__name %>" onclick="addModels('<%= model[i].model__url %>')">Add to lecture</a>
                               </div>
                               </div class="col-sm">
                               <a class="btn  btn-rounded btn-md btn-primary text-center" href="<%= model[i].model__url %>">view </a>
@@ -113,9 +120,51 @@
           </div>
           <% } %>
       </div>
+      <h1 class="text-center"> Select Among three models  </h1>
+      <div class="row">
+        <% for(var k=0;k<three__models.length;k++) {%>
+  
+                         <div class="col-md-4">
+                         <div class="card stylecard mt-3">
+        
+                          <div class="view overlay">
+                            <!-- <a class="btn btn-rounded btn-md btn-primary edit__btn btn-circle btn-sm" >E</a>  -->
+                              <img class="card-img-top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4Zeehq1KG2a0ZVemWuvlxXQi1gbT3Jzi6pg&usqp=CAU" alt="Card image cap">
+                            <a>
+                              <div class="mask rgba-white-slight"></div>
+                            </a>
+                          </div>
+                        
+                         
+                          <div class="card-body">
+                        
+                            <!-- Title -->
+                            <h3 class="card-title text-center text-capitalize"><%= three__models[k] %></h4>
+                            <hr>
+                            <!-- Text -->
+                            <p class="card-text set-width">Press Button below to add it in your lecture and see the change of education in future</p>
+                            <div class="text-center">
+                            
+                            <div class="row">                  
+                                <div class="col-sm">
+                                <a class="btn  btn-rounded btn-md btn-primary text-center" id="<%= three__models[k] %>" onclick="addModels('<%= three__models[k] %>')">Add to lecture</a>
+                                </div>
+                                </div class="col-sm">
+                                <a class="btn  btn-rounded btn-md btn-primary text-center" href="<%= three__models[k] %>">view </a>
+        
+                              </div>
+                          </div>
+                          
+                        </div>
+            </div>
+            <% } %>
+        </div>
       </div>
+      
+
     </div>
     <div class="tag__section">
+      <div class="all-tags">
         <h1 class="text-center tag__head" > Search by tags</h1>
       <% for(var i=0;i<model.length;i++) {%>
         <div class="tag">
@@ -123,6 +172,20 @@
           <a href="<%= link %>"><%= model[i].model__name %></a> 
         </div>
       <% }%>
+      <% for(var l=0;l<three__models.length;l++) {%>
+        <div class="tag">
+          <% link = "#" + three__models[l] %>
+          <a href="<%= link %>"><%= three__models[l] %></a> 
+        </div>
+      <% }%>
+      </div>
+      <div class="custom-model">
+        <h1 class="text-center" > Upload your own models</h1>
+        <form action="/a/b/c/d/test" method="post" enctype="multipart/form-data" >
+          <input type="file" class="form-group" name="modelTesting">
+          <button type="submit" class="btn btn-primary">Upload</button>
+      </form>
+      </div>
 
     </div>
 </div>
@@ -132,11 +195,8 @@
     arr.push(model_name)
     console.log(model_name)
     console.log(arr);
-    // var model__array = ['hello','hello','hello','hello','hello','hello','hello','hello','hello','hello'];
-    // for(let i=0;i<model__array.length;i++){
       var changeText = document.getElementById(model_name);
       changeText.innerHTML = "Added";
-    // }
   }
 
   function modelsDispatch() {

@@ -10,9 +10,11 @@ const bcrypt = require('bcrypt');
 const multer=require('multer');
 const query  = require("./models/query");
 const request = require('request');
+const fs =  require('fs')
 var isInstructorAuthenticated = false;
 var InstructorMail = '';
 var mailer = require('nodemailer');
+var threeModelsArray = []
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // using middlwares 
 app.use(bodyParser.json({ limit: '10mb', extended: true }));
@@ -127,6 +129,14 @@ app.get("/",(req,res)=>{
 app.get('/sign-in', (req, res) => {
     res.render('sign-in', {auth:true});
 });
+
+//Adding in last ,so that it runs if we don't have given that path or some other file
+app.get("/model/:id",(req,res)=>{
+  if(req.params.id!="null")
+  res.render('showmodels1',{name:req.params.id});
+  else
+  res.render('notfound',{});
+})
 
 // setted post route checking for correct instructor login 
 app.post('/sign-in', async (req, resp, next) => {
@@ -361,6 +371,40 @@ app.get("/all-lecture",(req,res)=>{
        res.render('lectures',{lectureArray:arr, length:arr.length,mail: null,checksubject:checksubject})
     }).catch((err)=>console.log("error finding records",err))
   });
+
+  //serving lecture page 
+var insdbtmail = '';
+var lecture_id = '';
+var i=0;
+// use ti get lecture using lecture id as it will be passed as params of request
+app.get('/lecture/:id', (req, res, next) => {
+  // i = i+1;
+  // console.log(i)
+  lectureNote
+    .find({ lecture_id: req.params.id })
+    .then((doc) => {
+      console.log(doc)
+      insdbtmail = doc[0].InsEmail;
+      lecture_id = doc[0].lecture_id;
+      var arr = [];
+      // console.log(doc[0].model)
+      // arr = doc[0].model;
+      // console.log(Object.entries(arr))
+      res.render('lecture', {
+        lecture_title: doc[0].title,
+        lecture_para: doc[0].para.replace(/["]+/g, "'"),
+        note: doc[0].additional_note,
+        src: doc[0].video_link,
+        reso: doc[0].resources,
+        id: doc[0].lecture_id,
+        model_name: doc[0].model
+        // models_length: Object.keys(arr).length
+
+      });
+    })
+    .catch((err) => console.log('error aagayi bhai',err));
+});
+  
   app.get("/dashboard/generate/add-model",async (req,resp)=>{
     var model__array = [];
       await request('https://console.echoar.xyz/query?key=holy-dust-4782', { json: true }, (err, res, body) => {
@@ -369,7 +413,22 @@ app.get("/all-lecture",(req,res)=>{
       console.log(id.length)
       id.map((data)=>{ model__array.push({model__url: data.additionalData.shortURL, model__name:data.hologram.filename.split('.').slice(0, -1).join('.')})})
       model__array.map((data)=>console.log(data))
-      resp.render("models",{lecture_id: currentLectureId, model:model__array})
+      const directoryname=__dirname+'/public/assets/models/glb';
+      console.log(directoryname);
+      fs.readdir(directoryname,async (err,files)=>{
+        if(err){
+          console.log('Error finding the directory')
+          resp.render('notfound',{})
+        }else{
+          files.map((file)=>{
+            var value=file;
+            threeModelsArray.push(value.split('.').slice(0, -1).join('.'));
+            console.log(value);
+          })
+        }
+        console.log(threeModelsArray)
+      resp.render("models",{lecture_id: currentLectureId, model:model__array, three__models: threeModelsArray})
+      threeModelsArray.splice(0,threeModelsArray.length)
     });
     console.log(model__array)
   })
@@ -431,37 +490,7 @@ app.get("/dashboard/:id",(req,res)=>{
   });
 })
 
-//serving lecture page 
-var insdbtmail = '';
-var lecture_id = '';
-var i=0;
-// use ti get lecture using lecture id as it will be passed as params of request
-app.get('/lecture/:id', (req, res, next) => {
-  // i = i+1;
-  // console.log(i)
-  lectureNote
-    .find({ lecture_id: req.params.id })
-    .then((doc) => {
-      console.log(doc)
-      insdbtmail = doc[0].InsEmail;
-      lecture_id = doc[0].lecture_id;
-      var arr = [];
-      // arr = doc[0].model;
-      // console.log(Object.entries(arr))
-      res.render('lecture', {
-        lecture_title: doc[0].title,
-        lecture_para: doc[0].para.replace(/["]+/g, "'"),
-        note: doc[0].additional_note,
-        src: doc[0].video_link,
-        reso: doc[0].resources,
-        id: doc[0].lecture_id,
-        model_name: doc[0].model
-        // models_length: Object.keys(arr).length
 
-      });
-    })
-    .catch((err) => console.log('error aagayi bhai',err));
-});
 
 //handing doubt request 
 app.post("/query",async (req,res)=>{
@@ -511,20 +540,16 @@ app.post("/query",async (req,res)=>{
   });
   res.redirect(`lecture/${lecture_id}`);
 });
-//* Adding Route for Models Adding
-app.get("/dashboard/generate/add-model",(req,res)=>{
-  res.render("models",{lecture_id: currentLectureId})
-})
-app.post("/dashboard/generate/add-model",async (req,res)=>{
-  console.log(req.body);
-  const filter = {lecture_id: req.body.lecture_id}
-  const update = {model: req.body.models_array}
-  console.log(update)
-  var updatedData = await lectureNote.findOneAndUpdate(filter, update, {
-    new: true
-  });
-  console.log(updatedData)
-});
+// app.post("/dashboard/generate/add-model",async (req,res)=>{
+//   console.log(req.body);
+//   const filter = {lecture_id: req.body.lecture_id}
+//   const update = {model: req.body.models_array}
+//   console.log(update)
+//   var updatedData = await lectureNote.findOneAndUpdate(filter, update, {
+//     new: true
+//   });
+//   console.log(updatedData)
+// });
 
 //below routes handle updating lecture feature
 app.get("/dashboard/edit/:id",(req,res,next)=>{
@@ -555,13 +580,7 @@ app.post("/edit/:id",async (req,res,next)=>{
   });
   console.log("ye updated data hai",updatedData);
 })
-//Adding in last ,so that it runs if we don't have given that path or some other file
-app.get("/:id",(req,res)=>{
-  if(req.params.id!="null")
-  res.render('showmodel',{name:req.params.id});
-  else
-  res.render('notfound',{});
-})
+
 
 app.get("/customodel/:id",(req,res)=>{
   console.log("sahi call hua ",req.params.id)
@@ -570,15 +589,10 @@ app.get("/customodel/:id",(req,res)=>{
   else
   res.render('notfound',{});
 })
-app.get("/a/b/c/uploadmodel",(req,res)=>{
-  res.render('upload_model',{})
-}
-);
 app.post("/a/b/c/d/test",upload.single('modelTesting'),(req,res,next)=>{
-res.render('showmodels1',
-{
-  name:req.file.originalname
-})
+  res.redirect("/dashboard/generate/add-model")
+});
+// res.render('showmodels1',{name:req.file.originalname})
 })
 // serving application 
 app.listen(port, () => {

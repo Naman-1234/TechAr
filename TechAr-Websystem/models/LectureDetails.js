@@ -9,7 +9,7 @@ let lectureNotes = new mongoose.Schema({
     video_link:{type:String,default:null},
     resources:{type:String,default:null},
     subject_name:{type:String,default:null},
-    model:{type:String,default:null},
+    model:[String],
     quillDelta:{type:String,default:null}
     // customModelName:{type:String,default:null}
 })
