@@ -7,28 +7,46 @@
     padding:0;
     box-sizing: border-box;
   }
+  .template
+  {
+    /*background-color:#b88700;*/
+    background-image: url("/images/background.jpg");
+    background-repeat: no-repeat;
+  }
+  .ql-video
+  {
+    display: block;
+    margin:auto;
+    width:30vw;
+    height:40vh;
+  }
+  .template-note::first-line , .template-links::first-line, #editor_text::first-line, .template-summary::first-line
+  {
+    text-align: center;
+  }
   .heading {
     color: white;
   }
   .template-heading
   {
-    background-color:rgb(3, 207, 88);
     text-align:center;
     text-shadow: 1px 1px red;
     font-size:5em;
     margin-bottom: 0;
     padding:25px 0;
+    min-height:20vh;
+    color:#fff;
   }
  
   #editor_text
   {
-    background-color: rgb(4, 168, 72);
     padding:0 100px;
     font-family: 'Montserrat', sans-serif;
     margin:0;
     color:#fff;
     margin-bottom: 0;
     padding:25px 15px;
+    min-height: 20vh;
   }
   #editor_text img
   {
@@ -42,13 +60,12 @@
     }
     .template-links
     {
-      background-color:  rgb(6, 122, 54);
       display:grid;
       grid-template-columns: 1fr 1fr;
       grid-template-rows: auto;
       margin-top:0px;
       margin-bottom: 0px;
-
+      min-height: 17vh;
       padding: 25px 0;
     }
     .template-links a
@@ -59,12 +76,13 @@
     }
   .template-summary
   {
-    background-color:rgb(0, 94, 39);
+
     margin:0;
+    min-height: 17.8vh;
   }
   .template-note
   {
-    background-color:rgb(4, 78, 35);
+
     font-size:1.4rem;
     margin: 0;
     padding:25px 50px;
@@ -72,8 +90,9 @@
   }
   .template-footer
   {
-    background-color: rgb(2, 51, 22);
+
     padding:15px 0;
+
   }
   .template-video
   {
@@ -124,13 +143,15 @@
 </div>
 
 <div class="template">
-  <h1 class="display-2 template-heading text-center"><%=lecture_title%></h1>
+  <h1 class="display-2 template-heading text-center font-weight-bold"><%=lecture_title%></h1>
   <div id="editor_text"></div>
-  <div class="template-links">
+  <div class="template-links container">
   <% var link = "" %>
   <% var name = "" %>
   <% var k=0 %>
+  <div class="row">
   <% for(var i=0;i<src.length;i++) {%>
+    <div class="col-sm-6">
     <% link = link + src[i] %>
      <% if(src[i]===',' || i===src.length-1) {%>
        <% if(link[link.length-1]===',') { %>
@@ -138,16 +159,18 @@
        <%}%>
        <% k++ %>
        <% name = "link-" + k %>
-       <a href="<%= link %>" class="btn btn-primary btn-small"><%= name %></a>
+       <a href="<%= link %>" class="btn btn-primary text-center d-flex align-items-center justify-content-center"><%= name %></a>
        <% name = "" %>
        <% link="" %>  
      <% } %>
+    </div>
   <% } %>
+</div>
  
 </div>
   <p class="template-summary"><%=reso%></p>
   <p class="template-note text-capitalize"><%=note%></p>
-</div>
+
 <div class="text-center template-footer">
 <button type="button" class="btn btn-primary btn-lg doubt-button" data-toggle="modal" data-target="#myModal">Ask your doubt here</button>
 <% for(j=0;j<model_name.length;j++){ %>
@@ -160,6 +183,7 @@
     <a class="btn btn-lg btn-primary" href="<%= route %>"><%= model_name[j] %></a>
   <%}%>
 <% }%> 
+</div>
 </div>
 <script>
   window.onload = function () {
