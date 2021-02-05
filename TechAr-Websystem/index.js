@@ -23,7 +23,7 @@ app.use(express.static('public'));
 
 var storage=multer.diskStorage({
   destination:(req,file,cb)=>{
-    cb(null,'assets/models/glb')
+    cb(null, __dirname+"/public/assets/models/glb")
   },
   filename:(req,file,cb)=>{
     cb(null,file.originalname)
