@@ -82,9 +82,9 @@ function main() {
     }
   
     {
-    //   const gltfLoader = new THREE.GLTFLoader();
-    //   const url='/assets/models/glb/offroad_truck.glb'
-    //   gltfLoader.load(url, (gltf) => {
+      const gltfLoader = new THREE.GLTFLoader();
+      const url='/assets/models/glb/offroad_truck.glb'
+      gltfLoader.load(url, (gltf) => {
         
         const root = gltf.scene;
         scene.add(root);

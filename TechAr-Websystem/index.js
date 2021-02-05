@@ -7,6 +7,7 @@ const lectureNote = require('./models/LectureDetails');
 const app = express();
 const instructorModel = require('./models/InstructorDetails');
 const bcrypt = require('bcrypt');
+const multer=require('multer');
 const query  = require("./models/query");
 var isInstructorAuthenticated = false;
 var InstructorMail = '';
@@ -20,7 +21,19 @@ app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname + '/../public')));
 app.use(express.static('public'));
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+var storage=multer.diskStorage({
+  destination:(req,file,cb)=>{
+    cb(null,'assets/models/glb')
+  },
+  filename:(req,file,cb)=>{
+    cb(null,file.originalname)
+  }
+});
+var upload=multer({
+  storage:storage
+});
+
+
 // connecting out map with mongodb atlas 
 mongoose
   .connect('mongodb+srv://creator:nnNN@@22@cluster0.bkrcv.mongodb.net/Images', {
@@ -33,7 +46,9 @@ mongoose
   .catch((err) => {
     console.log('not connected');
   });
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
 // this function help us to make a random string of n length
 function makeid(length) {
   var result = '';
@@ -542,8 +557,17 @@ app.get("/customodel/:id",(req,res)=>{
   else
   res.render('notfound',{});
 })
-app.get("/a/b/c/d/test",(req,res)=>{
-res.render('showmodels1',{})
+app.get("/a/b/c/uploadmodel",(req,res)=>{
+  res.render('upload_model',{})
+}
+);
+app.post("/a/b/c/d/test",upload.single('modelTesting'),(req,res,next)=>{
+  console.log(req.file)
+// res.render('showmodels1',{
+//   name:req.file
+// }
+res.render('Success',{})
+
 })
 // serving application 
 app.listen(port, () => {
