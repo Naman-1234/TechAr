@@ -23,7 +23,7 @@ app.use(express.static('public'));
 
 var storage=multer.diskStorage({
   destination:(req,file,cb)=>{
-    cb(null,'assets/models/glb')
+    cb(null,__dirname+'/public/assets/models/glb')
   },
   filename:(req,file,cb)=>{
     cb(null,file.originalname)
@@ -562,12 +562,10 @@ app.get("/a/b/c/uploadmodel",(req,res)=>{
 }
 );
 app.post("/a/b/c/d/test",upload.single('modelTesting'),(req,res,next)=>{
-  console.log(req.file)
-// res.render('showmodels1',{
-//   name:req.file
-// }
-res.render('Success',{})
-
+res.render('showmodels1',
+{
+  name:req.file.originalname
+})
 })
 // serving application 
 app.listen(port, () => {

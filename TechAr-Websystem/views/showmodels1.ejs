@@ -117,7 +117,10 @@ function main() {
 
   {
     const gltfLoader = new THREE.GLTFLoader();
-    const Modelname='<%-name%>';
+    //const Modelname='<%-JSON.stringify(name || null)%>';
+    const Modelname='<%-name%>'
+    console.log(Modelname)
+    alert(Modelname)
     const url=`/assets/models/glb/${Modelname}`
     gltfLoader.load(url, (gltf) => {
       
