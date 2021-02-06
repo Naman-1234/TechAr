@@ -69,6 +69,9 @@
 .all-tags {
   height: 500px;
 }
+.upload__head {
+  font-size: 28px;
+}
 </style>
 <div class="page__holder">
     <div class="model__container">
@@ -78,7 +81,7 @@
     </div>
     <!-- https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4Zeehq1KG2a0ZVemWuvlxXQi1gbT3Jzi6pg&usqp=CAU -->
     <div class="container mt-5 text-center">
-        <h1 class="text-center"> <%= three__models.length %> </h1>
+        <!-- <h1 class="text-center"> <%= three__models.length %> </h1> -->
         <button class="btn btn-primary" onclick="modelsDispatch()">Add all selected models </button>
         <h1 class="text-center"> Select Among echoar models  </h1>
 
@@ -102,13 +105,12 @@
                           <!-- Title -->
                           <h3 class="card-title text-center text-capitalize cardtitle"><%= model[i].model__name %></h4>
                           <hr>
-                          < !-- Text -->
                           <p class="card-text set-width">Press Button below to add it in your lecture and see the change of education in future</p>
                           <div class="text-center">
                           
                           <div class="row">                  
                               <div class="col-sm">
-                              <a class="btn  btn-rounded btn-md btn-primary text-center" id="<%= model[i].model__name %>" onclick="addModels('<%= model[i].model__url %>')">Add to lecture</a>
+                              <a class="btn  btn-rounded btn-md btn-primary text-center" id="<%= model[i].model__url %>" onclick="addModels('<%= model[i].model__url %>')">Add to lecture</a>
                               </div>
                               </div class="col-sm">
                               <a class="btn  btn-rounded btn-md btn-primary text-center" href="<%= model[i].model__url %>">view </a>
@@ -179,12 +181,15 @@
         </div>
       <% }%>
       </div>
-      <div class="custom-model">
-        <h1 class="text-center" > Upload your own models</h1>
-        <form action="/a/b/c/d/test" method="post" enctype="multipart/form-data" >
-          <input type="file" class="form-group" name="modelTesting">
-          <button type="submit" class="btn btn-primary">Upload</button>
+      <div class="custom-model text-center">
+        <h1 class="text-center upload__head" > Upload your own models only(.glb) </h1>
+        <form action="/custom/uploadmodel" method="post" class="text-center" enctype="multipart/form-data" >
+          <input type="file" class="form-control" name="modelTesting">
+          <div class="text-center">
+          <button type="submit" class="btn btn-primary text-center">Upload</button>
+          </div>
       </form>
+      <h6>Note* You can use this to convert model of any format to glb <a href="https://anyconv.com/fbx-to-gltf-converter/" target="_blank">Use it</a></h6>
       </div>
 
     </div>

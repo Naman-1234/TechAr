@@ -427,11 +427,14 @@ app.get('/lecture/:id', (req, res, next) => {
             threeModelsArray.push(value.split('.').slice(0, -1).join('.'));
             console.log(value);
           })
-        }
-      });
-        console.log(threeModelsArray)
+      console.log(threeModelsArray)
       resp.render("models",{lecture_id: currentLectureId, model:model__array, three__models: threeModelsArray})
       threeModelsArray.splice(0,threeModelsArray.length)
+        }
+      });
+      // console.log(threeModelsArray)
+      // resp.render("models",{lecture_id: currentLectureId, model:model__array, three__models: threeModelsArray})
+      // threeModelsArray.splice(0,threeModelsArray.length)
     });
     console.log(model__array)
   });
@@ -596,7 +599,8 @@ app.get("/customodel/:id",(req,res)=>{
   else
   res.render('notfound',{});
 })
-app.post("/a/b/c/d/test",upload.single('modelTesting'),(req,res,next)=>{
+
+app.post("/custom/uploadmodel",upload.single('modelTesting'),(req,res,next)=>{
   res.redirect("/dashboard/generate/add-model")
 });
 // res.render('showmodels1',{name:req.file.originalname})

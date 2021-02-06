@@ -137,7 +137,7 @@
         subject_name: obj.subject
       })
     ); 
-    window.location.href = '/success';
+    window.location.href = '/dashboard';
     }
         window.onload=function()
         {
@@ -167,6 +167,12 @@
       dangerMode: true,
     }).then(function(isConfirm) {
       if (isConfirm) {
+        swal({
+          title: "Nice!",
+          text: "Lecture updated successfully you will bre redirected to dashboard",
+          icon: "success",
+          button: "Yes",
+        });
        calltoupdate();
       } else {
         swal("Cancelled", "Nothing updated :)", "error");
