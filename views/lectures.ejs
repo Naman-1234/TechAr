@@ -44,22 +44,20 @@
                       <!-- Card content -->
                       <div class="card-body">
                     
-                        <!-- Title -->
+                        
                         <div class=" article-heading">
                         <h3 class="card-title cardtitle"><%= lectureArray[i][j].title %></h4>
                         </div>
                         <hr>
-                        <!-- Text -->
+                        
                         <p class="card-text set-width"><%= lectureArray[i][j].additional_note.substring(0,Math.min(101,lectureArray[i][j].additional_note.length)) %></p>
                         <div class="text-center">
-                        <!-- <button class="btn  btn-rounded btn-md btn-primary text-center">See Whole Lecture</button> -->
+                        
                         <a href=<%= src %> type="button" class="btn btn-rounded btn-md btn-primary text-center">See Whole Lecture</a>
                       </div>
                       </div>
-                      <!-- uncomment below line for deleting card using web ui temporarily -->
-                      <!-- <a href="<%= del_req %>" class="btn btn-primary">Delete</a>  -->
                     </div>
-          <!-- </div> -->
+  
         </div>
          </form>
          <% } %> 
