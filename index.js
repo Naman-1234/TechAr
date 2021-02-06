@@ -323,7 +323,7 @@ app.post('/admin-panel', async (req, res, next) => {
         console.log('error : ', err);
       });
   });
-  res.render('FrontPage', {});
+  res.render('frontPage', {});
 });
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // rendering lecture created by particular instructor 
@@ -463,7 +463,7 @@ app.post('/admin-login', (req, res, next) => {
 
 //* Adding get request path for Team Page
 app.get("/team",(req,res)=>{
-  res.render('Team',{})
+  res.render('team',{})
 });
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //temporary route to display success page
