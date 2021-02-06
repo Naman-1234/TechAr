@@ -32,7 +32,7 @@
 }
 
 .tag__section {
-    width: 20%;
+    width: 21%;
     position: fixed;
     left: 78%;
     height: 100vh;
@@ -42,7 +42,6 @@
 }
 
 .tag__head {
-  margin-top: 15%;
   font-size: 30px;
 }
 .tag {
@@ -70,16 +69,23 @@
 {
   margin-bottom: 150px;
   margin-left:auto;
-  margin-right:;
 }
 .upload__head {
   font-size: 25px;
 }
+.tag-container {
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  min-height: 200px;
+  max-height: 500px;
+}
 </style>
 <div class="page__holder">
   <div class="tag__section">
+    <div class="tag-container">
     <div class="all-tags">
-      <h1 class="text-center tag__head" > Search by tags</h1>
+      <h1 class="text-center tag__head font-weight-bold" > Search by tags</h1>
             <% for(var i=0;i<model.length;i++) {%>
               <div class="tag">
                 <% link = "#" + model[i].model__name %>
@@ -92,6 +98,7 @@
                 <a href="<%= link %>"><%= three__models[l] %></a> 
               </div>
             <% }%>
+            </div>
             </div>
             <div class="custom-model text-center">
               <h1 class="text-center upload__head" > Upload your own models only(.glb) </h1>
@@ -115,7 +122,7 @@
     <div class="container mt-5 text-center container-cards">
         <!-- <h1 class="text-center"> <%= model.length %> </h1> -->
         <button class="btn btn-primary" onclick="modelsDispatch()">Add all selected models </button>
-        <h1 class="text-center"> Select Among echoar models  </h1>
+        <h1 class="text-center font-weight-bold"> Select Among echoar models  </h1>
         <div class="row ">
       <% for(var i=0;i<model.length;i++) {%>
 
@@ -156,12 +163,12 @@
       </div>
     <div class="container mt-5 text-center container-cards">
 
-      <h1 class="text-center"> Select Among three models  </h1>
+      <h1 class="text-center font-weight-bold"> Select Among three models  </h1>
       <div class="row">
         <% for(var k=0;k<three__models.length;k++) {%>
   
                          <div class="col-md-4">
-                         <div class="card stylecard mt-3">
+                         <div class="card stylecard mt-3 mycard">
         
                           <div class="view overlay">
                             <!-- <a class="btn btn-rounded btn-md btn-primary edit__btn btn-circle btn-sm" >E</a>  -->
@@ -192,10 +199,6 @@
     </div>
     </div>
   </div>
-      <!-- <div class="d-flex align-items-center justify-content-center customheading text-center"> -->
-    <!-- <h1 class=" display-4 font-weight-bold text-capitalize text-center" > Search by tags</h1> -->
-  <!-- </div> -->
-    <!-- <div class="tag__section d-flex align-items-center justify-content-center"></div> -->
     </div>
     <% } %>
 </div>
@@ -214,8 +217,6 @@
     arr.push(model_name)
     console.log(model_name)
     console.log(arr);
-    // var model__array = ['hello','hello','hello','hello','hello','hello','hello','hello','hello','hello'];
-    // for(let i=0;i<model__array.length;i++){
       var changeText = document.getElementById(model_name);
       changeText.innerHTML = "Added";
     // }
