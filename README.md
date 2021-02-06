@@ -62,3 +62,5 @@ We had concurrently started the working on phase 1 and phase 2 due to limited am
    - [O] :  Ongoing
    - [T] :  Tends to completion
    - [C} :  Completed
+   
+  Link to conceptor files: [link](https://drive.google.com/drive/folders/1KrIG7bEedQhLZau6p7_ncBLSq77grCk8?usp=sharing)
