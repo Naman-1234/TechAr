@@ -202,7 +202,6 @@ app.post('/dashboard/generate',async (req, res, next) => {
   let lecture_reso = req.body.extras;
   let lecture_subject = req.body.subject_name;
   let model_name = req.body.model;
-  let quillDelta = req.body.quillDelta;
   // let customModelName = req.body.filename;
 
   let lectureData = new lectureNote({
@@ -213,9 +212,8 @@ app.post('/dashboard/generate',async (req, res, next) => {
     additional_note: lecture_additional_note,
     video_link: lecture_video_link,
     resources: lecture_reso,
-    subject_name: lecture_subject,
+    subject_name: lecture_subject
     // model: model_name,
-    quillDelta: quillDelta
     // customModelName: customModelName
   });
   var ob1 = await lectureData
