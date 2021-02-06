@@ -323,7 +323,7 @@ app.post('/admin-panel', async (req, res, next) => {
         console.log('error : ', err);
       });
   });
-  res.render('frontPage', {});
+  res.render('frontpage', {});
 });
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // rendering lecture created by particular instructor 
