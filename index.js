@@ -262,7 +262,7 @@ app.get('/admin-panel', (req, res, next) => {
 
 //* Adding get request path for Team Page
 app.get("/team",(req,res)=>{
-  res.render('Team',{})
+  res.render('team',{})
 });
 app.get("/about",(req,res)=>{
   res.render('why_us',{})
