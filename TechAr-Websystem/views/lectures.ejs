@@ -8,7 +8,7 @@
 <div class="lecture__cards">
 <div class=" colorContainer" id="all_articles">
 <% for(i=0;i<length-1;i++) {%>
-    <div class="heading text-center">
+    <div class="heading text-center font-weight-bolder display-4">
       <% if(i==0){ %> 
       <h1 class="text-capitalize extra__margin" id="<%= lectureArray[i][0].subject_name %>"> <%= lectureArray[i][0].subject_name %></h1>
       <% }else{ %>
@@ -73,7 +73,7 @@
   </div>
   
   <div class="subject__tags">
-    <h1 class="text-center tag__head"> Search by tags</h1>
+    <h1 class="text-center tag__head font-weight-bolder text-white"> Search by tags</h1>
     <% for(i=0;i<length-1;i++){ %>
     <div class="tag">
       <% towards = "#" + lectureArray[i][0].subject_name %>
