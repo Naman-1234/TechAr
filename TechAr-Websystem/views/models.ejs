@@ -152,7 +152,8 @@
                                 <a class="btn  btn-rounded btn-md btn-primary text-center" id="<%= three__models[k] %>" onclick="addModels('<%= three__models[k] %>')">Add to lecture</a>
                                 </div>
                                 </div class="col-sm">
-                                <a class="btn  btn-rounded btn-md btn-primary text-center" href="<%= three__models[k] %>">view </a>
+                                <% src = "/model/"+ three__models[k] %>
+                                <a class="btn  btn-rounded btn-md btn-primary text-center" href="<%= src %>">view </a>
         
                               </div>
                           </div>
@@ -189,7 +190,7 @@
           <button type="submit" class="btn btn-primary text-center">Upload</button>
           </div>
       </form>
-      <h6>Note* You can use this to convert model of any format to glb <a href="https://anyconv.com/fbx-to-gltf-converter/" target="_blank">Use it</a></h6>
+      <h6>Note* You can use this to convert model of any format to glb <a href="https://anyconv.com/fbx-to-glb-converter/" target="_blank">Use it</a></h6>
       </div>
 
     </div>
