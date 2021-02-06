@@ -32,6 +32,7 @@ var storage=multer.diskStorage({
     cb(null,file.originalname)
   }
 });
+
 var upload=multer({
   storage:storage
 });
@@ -105,7 +106,8 @@ convertTo2d=function(doc) {
            }
        }
        return arr;
-   } 
+   }
+
 checksubject=function(value) {
 if(value.toLowerCase()==="physics")
 return "physics";
@@ -426,12 +428,16 @@ app.get('/lecture/:id', (req, res, next) => {
             console.log(value);
           })
         }
+      });
         console.log(threeModelsArray)
       resp.render("models",{lecture_id: currentLectureId, model:model__array, three__models: threeModelsArray})
       threeModelsArray.splice(0,threeModelsArray.length)
     });
     console.log(model__array)
-  })
+  });
+
+ 
+
   app.post("/dashboard/generate/add-model",async (req,res)=>{
     console.log(req.body);
     const filter = {lecture_id: req.body.lecture_id}
@@ -554,7 +560,8 @@ app.post("/query",async (req,res)=>{
 //below routes handle updating lecture feature
 app.get("/dashboard/edit/:id",(req,res,next)=>{
   lectureNote.find({lecture_id:req.params.id}).then((value)=>{
-    console.log(value)
+    console.log("ye data hai",value)
+    value[0].quillDelta = ""
     res.render('edit_generator',{value:value});
   }).catch((err)=>{
     console.log(err);
@@ -593,7 +600,6 @@ app.post("/a/b/c/d/test",upload.single('modelTesting'),(req,res,next)=>{
   res.redirect("/dashboard/generate/add-model")
 });
 // res.render('showmodels1',{name:req.file.originalname})
-})
 // serving application 
 app.listen(port, () => {
     console.log('Server Started at ' + port);

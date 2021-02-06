@@ -6,6 +6,11 @@
   href="templates/texteditor/quill/syntax-styles/googlecode.css"
   rel="stylesheet"
 />
+<style>
+  .required{
+    color: red;
+  }
+</style>
 <div class="container mt-5">
   <h1 class="text-center">Update Lecture</h1>
   <label for="Insemail" class="mt-4">Enter instructor mail</label> <span class="required">*</span>
@@ -138,6 +143,7 @@
         {
             setTimeout(function() {
             var temp='<%- JSON.stringify(value) %>'
+            console.log(temp)
             var obj=JSON.parse(temp);
             console.log("obj[0]", obj[0])
             document.getElementById('Insemail').value=obj[0].InsEmail;
