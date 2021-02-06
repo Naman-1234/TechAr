@@ -12,6 +12,9 @@
     /*background-color:#b88700;*/
     background-image: url("/images/background.jpg");
     background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
   .ql-video
   {
@@ -47,6 +50,7 @@
     margin-bottom: 0;
     padding:25px 15px;
     min-height: 20vh;
+    width: 80%;
   }
   #editor_text img
   {
@@ -144,7 +148,7 @@
 
 <div class="template">
   <h1 class="display-2 template-heading text-center font-weight-bold"><%=lecture_title%></h1>
-  <div id="editor_text"></div>
+  <div id="editor_text" class="manage-text"></div>
   <div class="template-links container">
   <% var link = "" %>
   <% var name = "" %>

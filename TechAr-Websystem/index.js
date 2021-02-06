@@ -389,9 +389,6 @@ app.get('/lecture/:id', (req, res, next) => {
       insdbtmail = doc[0].InsEmail;
       lecture_id = doc[0].lecture_id;
       var arr = [];
-      // console.log(doc[0].model)
-      // arr = doc[0].model;
-      // console.log(Object.entries(arr))
       res.render('lecture', {
         lecture_title: doc[0].title,
         lecture_para: doc[0].para.replace(/["]+/g, "'"),
