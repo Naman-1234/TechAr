@@ -32,7 +32,7 @@
 }
 
 .tag__section {
-    width: 22%;
+    width: 20%;
     position: fixed;
     left: 78%;
     height: 100vh;
@@ -72,8 +72,38 @@
   margin-left:auto;
   margin-right:;
 }
+.upload__head {
+  font-size: 25px;
+}
 </style>
 <div class="page__holder">
+  <div class="tag__section">
+    <div class="all-tags">
+      <h1 class="text-center tag__head" > Search by tags</h1>
+            <% for(var i=0;i<model.length;i++) {%>
+              <div class="tag">
+                <% link = "#" + model[i].model__name %>
+                <a href="<%= link %>"><%= model[i].model__name %></a> 
+              </div>
+            <% }%>
+            <% for(var l=0;l<three__models.length;l++) {%>
+              <div class="tag">
+                <% link = "#" + three__models[l] %>
+                <a href="<%= link %>"><%= three__models[l] %></a> 
+              </div>
+            <% }%>
+            </div>
+            <div class="custom-model text-center">
+              <h1 class="text-center upload__head" > Upload your own models only(.glb) </h1>
+              <form action="/custom/uploadmodel" method="post" class="text-center" enctype="multipart/form-data" >
+                <input type="file" class="form-control" name="modelTesting">
+                <div class="text-center">
+                <button type="submit" class="btn btn-primary text-center">Upload</button>
+                </div>
+            </form>
+            <h6>Note* You can use this to convert model of any format to glb <a href="https://anyconv.com/fbx-to-glb-converter/" target="_blank">Use it</a></h6>
+            </div>
+          </div>
 
     <div class="model__container">
       
@@ -124,6 +154,8 @@
           </div>
           <% } %>
       </div>
+    <div class="container mt-5 text-center container-cards">
+
       <h1 class="text-center"> Select Among three models  </h1>
       <div class="row">
         <% for(var k=0;k<three__models.length;k++) {%>
@@ -159,46 +191,22 @@
 
     </div>
     </div>
-      <div class="d-flex align-items-center justify-content-center customheading text-center">
-    <h1 class=" display-4 font-weight-bold text-capitalize text-center" > Search by tags</h1>
   </div>
-    <div class="tag__section d-flex align-items-center justify-content-center"></div>
+      <!-- <div class="d-flex align-items-center justify-content-center customheading text-center"> -->
+    <!-- <h1 class=" display-4 font-weight-bold text-capitalize text-center" > Search by tags</h1> -->
+  <!-- </div> -->
+    <!-- <div class="tag__section d-flex align-items-center justify-content-center"></div> -->
     </div>
     <% } %>
 </div>
 </div>
 
-
+</div>
+</div>
+</div>
 </div>
 
-<div class="all-tags">
-<h1 class="text-center tag__head" > Search by tags</h1>
-      <% for(var i=0;i<model.length;i++) {%>
-        <div class="tag">
-          <% link = "#" + model[i].model__name %>
-          <a href="<%= link %>"><%= model[i].model__name %></a> 
-        </div>
-      <% }%>
-      <% for(var l=0;l<three__models.length;l++) {%>
-        <div class="tag">
-          <% link = "#" + three__models[l] %>
-          <a href="<%= link %>"><%= three__models[l] %></a> 
-        </div>
-      <% }%>
       </div>
-      <div class="custom-model text-center">
-        <h1 class="text-center upload__head" > Upload your own models only(.glb) </h1>
-        <form action="/custom/uploadmodel" method="post" class="text-center" enctype="multipart/form-data" >
-          <input type="file" class="form-control" name="modelTesting">
-          <div class="text-center">
-          <button type="submit" class="btn btn-primary text-center">Upload</button>
-          </div>
-      </form>
-      <h6>Note* You can use this to convert model of any format to glb <a href="https://anyconv.com/fbx-to-glb-converter/" target="_blank">Use it</a></h6>
-      </div>
-
-
-    </div>
 </div>
 <script>
   var arr = [];
