@@ -21,7 +21,7 @@
       <div class="row text-center">
        <% for(let j=0;j<lectureArray[i].length;j++) {%>
         <% if(lectureArray[i]!=='undefined' && lectureArray[i][0]!=='undefined'){ %>
-          <% var src = "https://techar-websystem.herokuapp.com/" + lectureArray[i][j].lecture_id %>
+          <% var src = "https://techar-websystem.herokuapp.com/lecture/" + lectureArray[i][j].lecture_id %>
 
         <form method="GET" action="<%= src %>">
                      <div class="col-md-4">
