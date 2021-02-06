@@ -452,13 +452,14 @@ app.get('/lecture/:id', (req, res, next) => {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // basically this route will help us to validate if admin is login in or not 
 app.post('/admin-login', (req, res, next) => {
-    var adminEmail = req.body.email;
-    var adminPassword = req.body.psw;
+    var adminEmail = req.body.usremail;
+    var adminPassword = req.body.usrpsw;
+    console.log(req.body)
     if (adminEmail === 'nlok5923@gmail.com' && adminPassword === '123') {
       res.render('admin-panel', {});
     } else {
     //   var userVerified = false;
-      res.render('admin-login', {});
+      res.render('admin-login', {auth:false});
     }
 });
 
