@@ -543,7 +543,7 @@ app.post("/query",async (req,res)=>{
       console.log('Email sent: ' + info.response);
     }
   });
-  res.redirect(`lecture/${lecture_id}`);
+  res.redirect(`/lecture/${lecture_id}`);
 });
 // app.post("/dashboard/generate/add-model",async (req,res)=>{
 //   console.log(req.body);
