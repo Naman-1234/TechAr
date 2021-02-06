@@ -6,7 +6,7 @@
 - While using physics.apk use image-1.jpeg present in ImageTargets folder as image target
 - While using biology.apk use image-2.jpeg and image-3.jpeg present in ImageTargets folder as image target
 
-## techAr Websystem:
+## TechAr Websystem:
 
 Steps to run it:
 ```
